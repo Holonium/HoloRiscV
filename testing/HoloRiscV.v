@@ -112,7 +112,7 @@ module HoloRiscV (
 	reg [3:0] SCYCLE = 0;
 	
 	//Declare intermediate registers
-	reg [31:0] CMD = {12'b0,5'b1,LW,5'b01101,LOAD};
+	reg [31:0] CMD = {7'b0,5'b0,5'b1,ADD,5'b01101,ALU};
 	reg [2:0] TYPE;
 	reg [4:0] RD;
 	reg [2:0] F3;
@@ -514,8 +514,83 @@ module HoloRiscV (
 							endcase
 						end
 					endcase
+					//STAGE <= MEMORY;
+					//CYCLE <= 0;
 				end
 				ALU : begin
+					case (F3)
+						ADD : begin
+							case (CMD[30])
+								0 : begin
+									REG_FILE[RS1] <= {16'b0,16'b1};
+									REG_FILE[RS2] <= {1'b0,15'b1,16'b0};
+									REG_FILE[RD] <= REG_FILE[RS1] + REG_FILE[RS2];
+									LDTMP[31:0] <= REG_FILE[RD];
+								end
+								1 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] - REG_FILE[RS2];
+								end
+							endcase
+						end
+						SLL : begin
+							LDTMP <= REG_FILE[RS2];
+							REG_FILE[RD] <= REG_FILE[RS1] << LDTMP[4:0];
+						end
+						SLT : begin
+							if ($signed(REG_FILE[RS1]) < $signed(REG_FILE[RS2])) begin
+								REG_FILE[RD] <= 1;
+								STAGE <= MEMORY;
+								CYCLE <= 0;
+							end
+							else begin
+								REG_FILE[RD] <= 0;
+								STAGE <= MEMORY;
+								CYCLE <= 0;
+							end
+						end
+						SLTU : begin
+							if (REG_FILE[RS1] < REG_FILE[RS2]) begin
+								REG_FILE[RD] <= 1;
+								STAGE <= MEMORY;
+								CYCLE <= 0;
+							end
+							else begin
+								REG_FILE[RD] <= 0;
+								STAGE <= MEMORY;
+								CYCLE <= 0;
+							end
+						end
+						XOR : begin
+							REG_FILE[RD] <= REG_FILE[RS1] ^ REG_FILE[RS2];
+							STAGE <= MEMORY;
+							CYCLE <= 0;
+						end
+						SR : begin
+							LDTMP <= REG_FILE[RS2];
+							case (CMD[30])
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] >> LDTMP[4:0];
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+								1 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] >>> LDTMP[4:0];
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						OR : begin
+							REG_FILE[RD] <= REG_FILE[RS1] | REG_FILE[RS2];
+							STAGE <= MEMORY;
+							CYCLE <= 0;
+						end
+						AND : begin
+							REG_FILE[RD] <= REG_FILE[RS1] & REG_FILE[RS2];
+							STAGE <= MEMORY;
+							CYCLE <= 0;
+						end
+					endcase
 				end
 				default : begin
 				end

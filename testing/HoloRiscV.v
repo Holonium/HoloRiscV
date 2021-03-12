@@ -471,6 +471,49 @@ module HoloRiscV (
 					endcase
 				end
 				ALUI : begin
+					case (F3)
+						ADDI : begin
+							REG_FILE[RD] <= REG_FILE[RS1] + {{20{IMM[11]}},IMM[11:0]};
+						end
+						SLTI : begin
+							if ($signed(REG_FILE[RS1]) < $signed({{20{IMM[11]}},IMM[11:0]})) begin
+								REG_FILE[RD] <= 1;
+							end
+							else begin
+								REG_FILE[RD] <= 0;
+							end
+						end
+						SLTIU : begin
+							if (REG_FILE[RS1] < {{20{IMM[11]}},IMM[11:0]}) begin
+								REG_FILE[RD] <= 1;
+							end
+							else begin
+								REG_FILE[RD] <= 0;
+							end
+						end
+						XORI : begin
+							REG_FILE[RD] <= REG_FILE[RS1] ^ {{20{IMM[11]}},IMM[11:0]};
+						end 
+						ORI : begin
+							REG_FILE[RD] <= REG_FILE[RS1] | {{20{IMM[11]}},IMM[11:0]};
+						end
+						ANDI : begin
+							REG_FILE[RD] <= REG_FILE[RS1] & {{20{IMM[11]}},IMM[11:0]};
+						end
+						SLLI :  begin
+							REG_FILE[RD] <= REG_FILE[RS1] << IMM[4:0];
+						end
+						SRI : begin
+							case (CMD[30])
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] >> IMM[4:0];
+								end
+								1 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] >>> IMM[4:0];
+								end
+							endcase
+						end
+					endcase
 				end
 				ALU : begin
 				end

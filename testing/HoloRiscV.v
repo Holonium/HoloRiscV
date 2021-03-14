@@ -432,9 +432,336 @@ module HoloRiscV (
 										end
 									endcase
 								end
+								default : begin
+								end
 							endcase
 						end
 					endcase
+				end
+				STORE : begin
+					case (CYCLE)
+						0 : begin
+							DATA_ADDR <= REG_FILE[RS1] + {{20{IMM[11]}},IMM[11:0]};
+							TMP <= REG_FILE[RS2];
+							DATA_WE <= 1;
+							CYCLE <= 1;
+						end
+						1 : begin
+							case (F3)
+								SB : begin
+									case (SCYCLE)
+										0 : begin
+											DATA_OUT <= TMP[7:0];
+											SCYCLE <= 1;
+										end
+										1: begin
+											DATA_OUT <= 0;
+											STAGE <= MEMORY;
+											SCYCLE <= 0;
+											CYCLE <= 0;
+											DATA_ADDR <= 0;
+											DATA_WE <= 0;
+										end
+										default : begin
+										end
+									endcase
+								end
+								SH : begin
+									case (SCYCLE)
+										0 : begin
+											DATA_OUT <= TMP[7:0];
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DATA_OUT <= TMP[15:8];
+											SCYCLE <= 3;
+										end
+										3 : begin
+											DATA_OUT <= 0;
+											STAGE <= MEMORY;
+											SCYCLE <= 0;
+											CYCLE <= 0;
+											DATA_ADDR <= 0;
+											DATA_WE <= 0;
+										end
+										default : begin
+										end
+									endcase
+								end
+								SW : begin
+									case (SCYCLE)
+										0 : begin
+											DATA_OUT <= TMP[7:0];
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DATA_OUT <= TMP[15:8];
+											SCYCLE <= 3;
+										end
+										3 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 4;
+										end
+										4 : begin
+											DATA_OUT <= TMP[23:16];
+											SCYCLE <= 5;
+										end
+										5 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 6;
+										end
+										6 : begin
+											DATA_OUT <= TMP[31:24];
+											SCYCLE <= 7;
+										end
+										7 : begin
+											DATA_OUT <= 0;
+											STAGE <= MEMORY;
+											SCYCLE <= 0;
+											CYCLE <= 0;
+											DATA_ADDR <= 0;
+											DATA_WE <= 0;
+										end
+										default : begin
+										end
+									endcase
+								end
+								default : begin
+								end
+							endcase
+						end
+					endcase
+				end
+				ALUI : begin
+					case (F3)
+						ADDI : begin
+							case (CYCLE)
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] + {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						SLTI : begin
+							case (CYCLE)
+								0 : begin
+									if ($signed(REG_FILE[RS1]) < $signed({{20{IMM[11]}},IMM[11:0]})) begin
+										REG_FILE[RD] <= 1;
+									end
+									else begin
+										REG_FILE[RD] <= 0;
+									end
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+								default : begin
+								end
+							endcase
+						end
+						SLTIU : begin
+							case (CYCLE)
+								0 : begin
+									if (REG_FILE[RS1] < {{20{IMM[11]}},IMM[11:0]}) begin
+										REG_FILE[RD] <= 1;
+									end
+									else begin
+										REG_FILE[RD] <= 0;
+									end
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+								default : begin
+								end
+							endcase
+						end
+						XORI : begin
+							case (CYCLE)
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] ^ {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						ORI : begin
+							case (CYCLE)
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] | {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						ANDI : begin
+							case (CYCLE)
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] & {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						SLLI : begin
+							case (CYCLE)
+								0 : begin
+									REG_FILE[RD] <= REG_FILE[RS1] << IMM[4:0];
+									CYCLE <= 1;
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+						SRI : begin
+							case (CYCLE)
+								0: begin
+									case (CMD[30])
+										0 : begin
+											REG_FILE[RD] <= REG_FILE[RS1] >> IMM[4:0];
+											CYCLE <= 1;
+										end
+										1 : begin
+											REG_FILE[RD] <= REG_FILE[RS1] >>> IMM[4:0];
+											CYCLE <= 1;
+										end
+									endcase
+								end
+								1 : begin
+									STAGE <= MEMORY;
+									CYCLE <= 0;
+								end
+							endcase
+						end
+					endcase
+				end
+				ALU : begin
+					case (CYCLE)
+						0 : begin
+							case (F3)
+								ADD : begin
+									case (CMD[30])
+										0 : begin
+											REG_FILE[RD] <= REG_FILE[RS1] + REG_FILE[RS2];
+											CYCLE <= 1;
+										end
+										1 : begin
+											REG_FILE[RD] <= REG_FILE[RS1] - REG_FILE[RS2];
+											CYCLE <= 1;
+										end
+										default : begin
+										end
+									endcase
+								end
+								SLL : begin
+									case (SCYCLE)
+										0 : begin
+											TMP <= REG_FILE[RS2];
+											SCYCLE <= 1;
+										end
+										1: begin
+											REG_FILE[RD] <= REG_FILE[RS1] << TMP[4:0];
+											SCYCLE <= 0;
+											CYCLE <= 1;
+										end
+										default : begin
+										end
+									endcase
+								end
+								SLT : begin
+									if ($signed(REG_FILE[RS1]) < $signed(REG_FILE[RS2])) begin
+										REG_FILE[RD] <= 1;
+										CYCLE <= 1;
+									end
+									else begin
+										REG_FILE[RD] <= 0;
+										CYCLE <= 1;
+									end
+								end
+								SLTU : begin
+									if (REG_FILE[RS1] < REG_FILE[RS2]) begin
+										REG_FILE[RD] <= 1;
+										CYCLE <= 1;
+									end
+									else begin
+										REG_FILE[RD] <= 0;
+										CYCLE <= 1;
+									end
+								end
+								XOR : begin
+									REG_FILE[RD] <= REG_FILE[RS1] ^ REG_FILE[RS2];
+									CYCLE <= 1;
+								end
+								SR : begin
+									case (SCYCLE)
+										0 : begin
+											TMP <= REG_FILE[RS2];
+											SCYCLE <= 1;
+										end
+										1 : begin
+											case (CMD[30])
+												0 : begin
+													REG_FILE[RD] <= REG_FILE[RS1] >> TMP[4:0];
+													SCYCLE <= 0;
+													CYCLE <= 1;
+												end
+												1 : begin
+													REG_FILE[RD] <= REG_FILE[RS1] >>> TMP[4:0];
+													SCYCLE <= 0;
+													CYCLE <= 1;
+												end
+												default : begin
+												end
+											endcase
+										end
+										default : begin
+										end
+									endcase
+								end
+								OR : begin
+									REG_FILE[RD] <= REG_FILE[RS1] | REG_FILE[RS2];
+									CYCLE <= 1;
+								end
+								AND : begin
+									REG_FILE[RD] <= REG_FILE[RS1] & REG_FILE[RS2];
+									CYCLE <= 1;
+								end
+							endcase
+						end
+						1 : begin
+							STAGE <= MEMORY;
+							CYCLE <= 0;
+						end
+					endcase
+				end
+				default : begin
 				end
 			endcase
 		end

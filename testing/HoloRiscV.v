@@ -35,6 +35,34 @@ module HoloRiscV (
 	parameter MEMORY = 3'b011;
 	parameter WRITEBACK = 3'b100;
 
+	//Define ALUI operations
+	parameter ADDI = 3'b000;
+	parameter SLTI = 3'b010;
+	parameter SLTIU = 3'b011;
+	parameter XORI = 3'b100;
+	parameter ORI = 3'b110;
+	parameter ANDI = 3'b111;
+	parameter SLLI = 3'b001;
+	parameter SRI = 3'b101;
+	
+	//Define ALU operations
+	parameter ADD = 3'b000;
+	parameter SLL = 3'b001;
+	parameter SLT = 3'b010;
+	parameter SLTU = 3'b011;
+	parameter XOR = 3'b100;
+	parameter SR = 3'b101;
+	parameter OR = 3'b110;
+	parameter AND = 3'b111;
+
+	//Define branches
+	parameter BEQ = 3'b000;
+	parameter BNE = 3'b001;
+	parameter BLT = 3'b100;
+	parameter BGE = 3'b101;
+	parameter BLTU = 3'b110;
+	parameter BGEU = 3'b111;
+
 	//Define instruction formats
 	parameter R = 3'b001;
 	parameter I = 3'b010;
@@ -62,7 +90,7 @@ module HoloRiscV (
 	//Registers
 	reg [31:0] CMD = 0;
 	reg [31:0] REG_FILE [0:31];
-	reg [3:0] PC = 0;
+	reg [31:0] PC = 0;
 
 	//Control registers
 	reg [2:0] STAGE = 0;
@@ -88,7 +116,7 @@ module HoloRiscV (
 		if (STAGE == FETCH) begin
 			case (CYCLE)
 				0 : begin
-					INSTR_ADDR <= PC;
+					INSTR_ADDR <= PC[3:0];
 					CYCLE <= 1;
 				end
 				1 : begin
@@ -122,7 +150,7 @@ module HoloRiscV (
 				8 : begin
 					CYCLE <= 0;
 					STAGE <= DECODE;
-					INSTR_ADDR <= PC;
+					INSTR_ADDR <= PC[3:0];
 				end
 				default : begin
 				end
@@ -198,9 +226,13 @@ module HoloRiscV (
 						R : begin
 							SRC2 <= REG_FILE[RS2];
 							SRC1 <= REG_FILE[RS1];
+							//SRC1 <= {1'b1,31'b110000000};
+							//SRC2 <= 32'b1110010;
 						end
 						I : begin
 							SRC1 <= REG_FILE[RS1];
+							//SRC1 <= {1'b0,7'b1,24'b0};
+							//SRC1 <= {22'b111111111,10'b1111100};
 						end
 						S : begin
 							SRC2 <= REG_FILE[RS2];
@@ -225,6 +257,221 @@ module HoloRiscV (
 		end
 		//EXECUTE
 		if (STAGE == EXECUTE) begin
+			case (CYCLE)
+				0 : begin
+					case (CMD[6:0])
+						LUI : begin
+							DEST <= {IMM[31:12],12'b0};
+							CYCLE <= 1;
+						end
+						AUIPC : begin
+							DEST <= PC + {IMM[31:12],12'b0};
+							CYCLE <= 1;
+						end
+						JAL : begin
+							case (SCYCLE)
+								0: begin
+									PC <= PC + {{12{IMM[20]}},IMM[20:1]};
+									SCYCLE <= 1;
+								end
+								1 : begin
+									DEST <= PC + 4;
+									CYCLE <= 1;
+									SCYCLE <= 0;
+								end
+								default : begin
+								end
+							endcase	
+						end
+						JALR : begin
+							case (SCYCLE)
+								0 : begin
+									PC <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+									SCYCLE <= 1;
+								end
+								1 : begin
+									PC[0] <= 1'b0;
+									SCYCLE <= 2;
+								end
+								2 : begin
+									PC <= PC + 4;
+									SCYCLE <= 3;
+									CYCLE <= 1;
+								end
+								3 : begin
+									//STAGE <= MEMORY;
+									SCYCLE <= 0;
+									CYCLE <= 1;
+								end
+								default : begin
+								end
+							endcase
+						end
+						BRANCH : begin
+							case (F3)
+								BEQ : begin
+									if (SRC1 == SRC2) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								BNE : begin
+									if (SRC1 != SRC2) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								BLT : begin
+									if ($signed(SRC1) < $signed(SRC2)) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								BGE : begin
+									if ($signed(SRC1) >= $signed(SRC2)) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								BLTU : begin
+									if (SRC1 < SRC2) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								BGEU : begin
+									if (SRC1 >= SRC2) begin
+										PC <= PC + {{20{IMM[12]}},IMM[12:1]};
+									end
+								end
+								default : begin
+								end
+							endcase
+							CYCLE <= 1;
+						end
+						ALUI : begin
+							case (F3)
+								ADDI : begin
+									DEST <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								SLTI : begin
+									if ($signed(SRC1) < $signed({{20{IMM[11]}},IMM[11:0]})) begin
+										DEST <= 1;
+									end
+									else begin
+										DEST <= 0;
+									end
+									CYCLE <= 1;
+								end
+								SLTIU : begin
+									if (SRC1 < {{20{IMM[11]}},IMM[11:0]}) begin
+										DEST <= 1;
+									end
+									else begin
+										DEST <= 0;
+									end
+									CYCLE <= 1;
+								end
+								XORI : begin
+									DEST <= SRC1 ^ {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								ORI : begin
+									DEST <= SRC1 | {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								ANDI : begin
+									DEST <= SRC1 & {{20{IMM[11]}},IMM[11:0]};
+									CYCLE <= 1;
+								end
+								SLLI : begin
+									DEST <= SRC1 << CMD[24:20];
+									CYCLE <= 1;
+								end
+								SRI : begin
+									case (CMD[30])
+										0 : begin
+											DEST <= SRC1 >> CMD[24:20];
+										end
+										1 : begin
+											DEST <= $signed(SRC1) >>> CMD[24:20];
+										end
+									endcase
+									CYCLE <= 1;
+								end
+							endcase
+						end
+						ALU : begin
+							case (F3)
+								ADD : begin
+									case (CMD[30])
+										0 : begin
+											DEST <= SRC1 + SRC2;
+										end
+										1 : begin
+											DEST <= SRC1 - SRC2;
+										end
+									endcase
+									CYCLE <= 1;
+								end
+								SLL : begin
+									DEST <= SRC1 << SRC2[4:0];
+									CYCLE <= 1;
+								end
+								SLT : begin
+									if ($signed(SRC1) < $signed(SRC2)) begin
+										DEST <= 1;
+									end
+									else begin
+										DEST <= 0;
+									end
+									CYCLE <= 1;
+								end
+								SLTU : begin
+									if (SRC1 < SRC2) begin
+										DEST <= 1;
+									end
+									else begin
+										DEST <= 0;
+									end
+									CYCLE <= 1;
+								end
+								XOR : begin
+									DEST <= SRC1 ^ SRC2;
+									CYCLE <= 1;
+								end
+								SR : begin
+									case (CMD[30])
+										0 : begin
+											DEST <= SRC1 >> SRC2[4:0];
+										end
+										1 : begin
+											DEST <= $signed(SRC1) >>> SRC2[4:0];
+										end
+									endcase
+									CYCLE <= 1;
+								end
+								OR : begin
+									DEST <= SRC1 | SRC2;
+									CYCLE <= 1;
+								end
+								AND : begin
+									DEST <= SRC1 & SRC2;
+									CYCLE <= 1;
+								end
+							endcase
+						end
+						LOAD : CYCLE <= 1;
+						STORE : CYCLE <= 1;
+						default : begin
+						end
+					endcase
+				end
+				1 : begin
+					STAGE <= MEMORY;
+					CYCLE <= 0;
+					SCYCLE <= 0;
+				end
+			endcase
+		end
+		//MEMORY
+		if (STAGE == MEMORY) begin
 			
 		end
 	end

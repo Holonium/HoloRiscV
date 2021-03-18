@@ -63,6 +63,18 @@ module HoloRiscV (
 	parameter BLTU = 3'b110;
 	parameter BGEU = 3'b111;
 
+	//Define load operations
+	parameter LB = 3'b000;
+	parameter LH = 3'b001;
+	parameter LW = 3'b010;
+	parameter LBU = 3'b100;
+	parameter LHU = 3'b101;
+	
+	//Define store operations
+	parameter SB = 3'b000;
+	parameter SH = 3'b001;
+	parameter SW = 3'b010;
+
 	//Define instruction formats
 	parameter R = 3'b001;
 	parameter I = 3'b010;
@@ -87,6 +99,13 @@ module HoloRiscV (
 	reg [7:0] INSTR_DATA;
 	reg INSTR_OE = 1;
 	
+	//Program memory I/O
+	reg [31:0] DATA_ADDR;
+	reg [7:0] DATA_OUT;
+	reg [7:0] DATA_IN;
+	reg DATA_OE = 0;
+	reg DATA_WE = 0;
+
 	//Registers
 	reg [31:0] CMD = 0;
 	reg [31:0] REG_FILE [0:31];
@@ -111,7 +130,7 @@ module HoloRiscV (
 	reg [31:0] DEST = 0;
 
 	always @(posedge clk) begin
-		REG_FILE[0] <= 32'b0;
+		REG_FILE[0] <= {32{1'b0}};
 		//FETCH
 		if (STAGE == FETCH) begin
 			case (CYCLE)
@@ -261,11 +280,11 @@ module HoloRiscV (
 				0 : begin
 					case (CMD[6:0])
 						LUI : begin
-							DEST <= {IMM[31:12],12'b0};
+							DEST <= {IMM[31:12],{12{1'b0}}};
 							CYCLE <= 1;
 						end
 						AUIPC : begin
-							DEST <= PC + {IMM[31:12],12'b0};
+							DEST <= PC + {IMM[31:12],{12{1'b0}}};
 							CYCLE <= 1;
 						end
 						JAL : begin
@@ -472,7 +491,207 @@ module HoloRiscV (
 		end
 		//MEMORY
 		if (STAGE == MEMORY) begin
-			
+			case (CYCLE)
+				0 : begin
+					case (CMD[6:0])
+						LOAD : begin
+							DATA_WE <= 0;
+							DATA_OE <= 1;
+						end
+						STORE : begin
+							DATA_OE <= 0;
+							DATA_WE <= 1;
+						end
+						default : begin
+						end
+					endcase
+					CYCLE <= 1;
+				end
+				1 : begin
+					DATA_ADDR <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+					CYCLE <= 2;
+				end
+				2 : begin
+					case (CMD[6:0])
+						LOAD : begin
+							case (F3)
+								LB : begin
+									DEST <= {{24{DATA_IN[7]}},DATA_IN};
+									CYCLE <= 3;
+								end
+								LH : begin
+									case (SCYCLE)
+										0 : begin
+											DEST[7:0] <= DATA_IN;
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DEST[31:8] <= {{16{DATA_IN[7]}},DATA_IN};
+											SCYCLE <= 0;
+											CYCLE <= 3;
+										end
+										default : begin
+										end
+									endcase
+								end
+								LW : begin
+									case (SCYCLE)
+										0 : begin
+											DEST[7:0] <= DATA_IN;
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DEST[15:8] <= DATA_IN;
+											SCYCLE <= 3;
+										end
+										3 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 4;
+										end
+										4 : begin
+											DEST[23:16] <= DATA_IN;
+											SCYCLE <= 5;
+										end
+										5 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 6;
+										end
+										6 : begin
+											DEST[31:24] <= DATA_IN;
+											SCYCLE <= 0;
+											CYCLE <= 3;
+										end
+										default : begin
+										end
+									endcase
+								end
+								LBU : begin
+									DEST <= {{24{1'b0}},DATA_IN};
+									CYCLE <= 3;
+								end
+								LHU : begin
+									case (SCYCLE)
+										0 : begin
+											DEST[7:0] <= DATA_IN;
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DEST[31:8] <= {{16{1'b0}},DATA_IN};
+											CYCLE <= 3;
+											SCYCLE <= 0;
+										end
+										default : begin
+										end
+									endcase
+								end
+								default : begin
+								end
+							endcase
+						end
+						STORE : begin
+							case (F3)
+								SB : begin
+									DATA_OUT <= SRC2[7:0];
+									CYCLE <= 3;
+								end
+								SH : begin
+									case (SCYCLE)
+										0 : begin
+											DATA_OUT <= SRC2[7:0];
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DATA_OUT <= SRC2[15:8];
+											SCYCLE <= 0;
+											CYCLE <= 3;
+										end
+										default : begin
+										end
+									endcase
+								end
+								SW : begin
+									case (SCYCLE)
+										0 : begin
+											DATA_OUT <= SRC2[7:0];
+											SCYCLE <= 1;
+										end
+										1 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 2;
+										end
+										2 : begin
+											DATA_OUT <= SRC2[15:8];
+											SCYCLE <= 3;
+										end
+										3 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 4;
+										end
+										4 : begin
+											DATA_OUT <= SRC2[23:16];
+											SCYCLE <= 5;
+										end
+										5 : begin
+											DATA_ADDR <= DATA_ADDR + 1;
+											SCYCLE <= 6;
+										end
+										6 : begin
+											DATA_OUT <= SRC2[31:24];
+											SCYCLE <= 0;
+											CYCLE <= 3;
+										end
+										default : begin
+										end
+									endcase
+								end
+								default : begin
+								end
+							endcase
+						end
+						default : begin
+						end
+					endcase
+				end
+				3 : begin
+					STAGE <= WRITEBACK;
+					CYCLE <= 0;
+					SCYCLE <= 0;
+					DATA_OE <= 0;
+					DATA_WE <= 0;
+				end
+			endcase
+		end
+		//WRITEBACK
+		if (STAGE == WRITEBACK) begin
+			case (CYCLE)
+				0 : begin
+					REG_FILE[RD] <= DEST;
+					PC <= PC + 4;
+					CYCLE <= 1;
+				end
+				1 : begin
+					CYCLE <= 0;
+					STAGE <= FETCH;
+				end
+				default : begin
+				end
+			endcase
 		end
 	end
 endmodule

@@ -14,13 +14,13 @@ module HoloRiscV (
 	);
 	
 	reg [7:0] instr_mem [0:15];
-	//reg [7:0] prog_mem [0:15];
+	reg [7:0] prog_mem [0:15];
 
 	initial begin
 		$dumpfile("HoloRiscV.vcd");
 		$dumpvars(0,HoloRiscV);
 		$readmemb("instr.mem",instr_mem);
-		//$readmemb("prog.mem",prog_mem);
+		$readmemb("prog.mem",prog_mem);
 		#5000 $finish;
 	end
 
@@ -491,6 +491,7 @@ module HoloRiscV (
 		end
 		//MEMORY
 		if (STAGE == MEMORY) begin
+			DATA_IN <= prog_mem[DATA_ADDR];
 			case (CYCLE)
 				0 : begin
 					case (CMD[6:0])
@@ -665,6 +666,7 @@ module HoloRiscV (
 							endcase
 						end
 						default : begin
+							CYCLE <= 3;
 						end
 					endcase
 				end

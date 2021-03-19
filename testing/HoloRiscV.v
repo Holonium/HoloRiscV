@@ -13,15 +13,17 @@ module HoloRiscV (
 
 	);
 	
-	reg [7:0] instr_mem [0:15];
+	reg [7:0] instr_mem [0:3];
 	reg [7:0] prog_mem [0:15];
+	//reg [31:0] reg_init [0:31];
 
 	initial begin
 		$dumpfile("HoloRiscV.vcd");
 		$dumpvars(0,HoloRiscV);
 		$readmemb("instr.mem",instr_mem);
 		$readmemb("prog.mem",prog_mem);
-		#5000 $finish;
+		//$readmemb("reg.mem",REG_FILE);
+		#1000 $finish;
 	end
 
 	reg clk = 0;
@@ -95,7 +97,7 @@ module HoloRiscV (
 	parameter ALU = 7'b0110011;
 
 	//Instruction memory I/O
-	reg [3:0] INSTR_ADDR;
+	reg [1:0] INSTR_ADDR;
 	reg [7:0] INSTR_DATA;
 	reg INSTR_OE = 1;
 	
@@ -128,18 +130,21 @@ module HoloRiscV (
 	reg [31:0] SRC1 = 0;
 	reg [31:0] SRC2 = 0;
 	reg [31:0] DEST = 0;
+	reg [31:0] EXTENDED = 0;
+
+	reg [7:0] INSTR = 0;
 
 	always @(posedge clk) begin
-		REG_FILE[0] <= {32{1'b0}};
+		REG_FILE[0] <= 0;
 		//FETCH
 		if (STAGE == FETCH) begin
 			case (CYCLE)
 				0 : begin
-					INSTR_ADDR <= PC[3:0];
+					INSTR_ADDR <= PC[1:0];
 					CYCLE <= 1;
 				end
 				1 : begin
-					CMD[7:0] <= instr_mem[INSTR_ADDR];
+					CMD[31:24] <= instr_mem[INSTR_ADDR];
 					CYCLE <= 2;
 				end
 				2 : begin
@@ -147,7 +152,7 @@ module HoloRiscV (
 					CYCLE <= 3;
 				end
 				3 : begin
-					CMD[15:8] <= instr_mem[INSTR_ADDR];
+					CMD[23:16] <= instr_mem[INSTR_ADDR];
 					CYCLE <= 4;
 				end
 				4 : begin
@@ -155,7 +160,7 @@ module HoloRiscV (
 					CYCLE <= 5;
 				end
 				5 : begin
-					CMD[23:16] <= instr_mem[INSTR_ADDR];
+					CMD[15:8] <= instr_mem[INSTR_ADDR];
 					CYCLE <= 6;
 				end
 				6 : begin
@@ -163,13 +168,15 @@ module HoloRiscV (
 					CYCLE <= 7;
 				end
 				7 : begin
-					CMD[31:24] <= instr_mem[INSTR_ADDR];
+					CMD[7:0] <= instr_mem[INSTR_ADDR];
 					CYCLE <= 8;
 				end
 				8 : begin
 					CYCLE <= 0;
 					STAGE <= DECODE;
-					INSTR_ADDR <= PC[3:0];
+					INSTR_ADDR <= PC[1:0];
+					REG_FILE[1] <= -13;
+					REG_FILE[2] <= 4;
 				end
 				default : begin
 				end
@@ -214,6 +221,7 @@ module HoloRiscV (
 							RS1 <= CMD[19:15];
 							F3 <= CMD[14:12];
 							RD <= CMD[11:7];
+							EXTENDED <= {{20{CMD[31]}},IMM[31:20]};
 						end
 						S : begin //S
 							IMM[11:0] <= {CMD[31:25],CMD[11:7]};
@@ -234,6 +242,7 @@ module HoloRiscV (
 						J : begin //J
 							IMM[20:1] <= {CMD[31],CMD[19:12],CMD[20],CMD[30:21]};
 							RD <= CMD[11:7];
+							EXTENDED <= {{20{CMD[31]}},IMM[31:20]};
 						end
 						default : begin
 						end
@@ -279,15 +288,15 @@ module HoloRiscV (
 			case (CYCLE)
 				0 : begin
 					case (CMD[6:0])
-						LUI : begin
+						LUI : begin //FUNCTIONAL
 							DEST <= {IMM[31:12],{12{1'b0}}};
 							CYCLE <= 1;
 						end
-						AUIPC : begin
+						AUIPC : begin //FUNCTIONAL
 							DEST <= PC + {IMM[31:12],{12{1'b0}}};
 							CYCLE <= 1;
 						end
-						JAL : begin
+						JAL : begin //PROBLEM LOCATED
 							case (SCYCLE)
 								0: begin
 									PC <= PC + {{12{IMM[20]}},IMM[20:1]};
@@ -302,7 +311,7 @@ module HoloRiscV (
 								end
 							endcase	
 						end
-						JALR : begin
+						JALR : begin //PROBLEM LOCATED
 							case (SCYCLE)
 								0 : begin
 									PC <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
@@ -326,7 +335,7 @@ module HoloRiscV (
 								end
 							endcase
 						end
-						BRANCH : begin
+						BRANCH : begin //UNTESTED DUE TO HIGH CHANCE OF PROBLEMS
 							case (F3)
 								BEQ : begin
 									if (SRC1 == SRC2) begin
@@ -363,14 +372,14 @@ module HoloRiscV (
 							endcase
 							CYCLE <= 1;
 						end
-						ALUI : begin
+						ALUI : begin //FUNCTIONAL
 							case (F3)
-								ADDI : begin
-									DEST <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+								ADDI : begin //FUNCTIONAL
+									DEST <= SRC1 + EXTENDED;
 									CYCLE <= 1;
 								end
-								SLTI : begin
-									if ($signed(SRC1) < $signed({{20{IMM[11]}},IMM[11:0]})) begin
+								SLTI : begin //FUNCTIONAL
+									if ($signed(SRC1) < $signed(EXTENDED)) begin
 										DEST <= 1;
 									end
 									else begin
@@ -378,8 +387,8 @@ module HoloRiscV (
 									end
 									CYCLE <= 1;
 								end
-								SLTIU : begin
-									if (SRC1 < {{20{IMM[11]}},IMM[11:0]}) begin
+								SLTIU : begin //FUNCTIONAL
+									if (SRC1 < EXTENDED) begin
 										DEST <= 1;
 									end
 									else begin
@@ -387,23 +396,26 @@ module HoloRiscV (
 									end
 									CYCLE <= 1;
 								end
-								XORI : begin
-									DEST <= SRC1 ^ {{20{IMM[11]}},IMM[11:0]};
+								XORI : begin //FUNCTIONAL
+									//DEST <= SRC1 ^ {{20{IMM[11]}},IMM[11:0]};
+									DEST <= SRC1 ^ EXTENDED;
 									CYCLE <= 1;
 								end
-								ORI : begin
-									DEST <= SRC1 | {{20{IMM[11]}},IMM[11:0]};
+								ORI : begin //FUNCTIONAL
+									//DEST <= SRC1 | {{20{IMM[11]}},IMM[11:0]};
+									DEST <= SRC1 | EXTENDED;
 									CYCLE <= 1;
 								end
-								ANDI : begin
-									DEST <= SRC1 & {{20{IMM[11]}},IMM[11:0]};
+								ANDI : begin //FUNCTIONAL
+									//DEST <= SRC1 & {{20{IMM[11]}},IMM[11:0]};
+									DEST <= SRC1 ^ EXTENDED;
 									CYCLE <= 1;
 								end
-								SLLI : begin
+								SLLI : begin //FUNCTIONAL
 									DEST <= SRC1 << CMD[24:20];
 									CYCLE <= 1;
 								end
-								SRI : begin
+								SRI : begin //FUNCTIONAL
 									case (CMD[30])
 										0 : begin
 											DEST <= SRC1 >> CMD[24:20];
@@ -416,9 +428,9 @@ module HoloRiscV (
 								end
 							endcase
 						end
-						ALU : begin
+						ALU : begin //FUNCTIONAL
 							case (F3)
-								ADD : begin
+								ADD : begin //FUNCTIONAL
 									case (CMD[30])
 										0 : begin
 											DEST <= SRC1 + SRC2;
@@ -429,11 +441,11 @@ module HoloRiscV (
 									endcase
 									CYCLE <= 1;
 								end
-								SLL : begin
+								SLL : begin //FUNCTIONAL
 									DEST <= SRC1 << SRC2[4:0];
 									CYCLE <= 1;
 								end
-								SLT : begin
+								SLT : begin //FUNCTIONAL
 									if ($signed(SRC1) < $signed(SRC2)) begin
 										DEST <= 1;
 									end
@@ -442,7 +454,7 @@ module HoloRiscV (
 									end
 									CYCLE <= 1;
 								end
-								SLTU : begin
+								SLTU : begin //FUNCTIONAL
 									if (SRC1 < SRC2) begin
 										DEST <= 1;
 									end
@@ -451,11 +463,11 @@ module HoloRiscV (
 									end
 									CYCLE <= 1;
 								end
-								XOR : begin
+								XOR : begin //FUNCTIONAL
 									DEST <= SRC1 ^ SRC2;
 									CYCLE <= 1;
 								end
-								SR : begin
+								SR : begin //FUNCTIONAL
 									case (CMD[30])
 										0 : begin
 											DEST <= SRC1 >> SRC2[4:0];
@@ -466,11 +478,11 @@ module HoloRiscV (
 									endcase
 									CYCLE <= 1;
 								end
-								OR : begin
+								OR : begin //FUNCTIONAL
 									DEST <= SRC1 | SRC2;
 									CYCLE <= 1;
 								end
-								AND : begin
+								AND : begin //FUNCTIONAL
 									DEST <= SRC1 & SRC2;
 									CYCLE <= 1;
 								end
@@ -479,6 +491,7 @@ module HoloRiscV (
 						LOAD : CYCLE <= 1;
 						STORE : CYCLE <= 1;
 						default : begin
+							CYCLE <= 1;
 						end
 					endcase
 				end
@@ -490,7 +503,7 @@ module HoloRiscV (
 			endcase
 		end
 		//MEMORY
-		if (STAGE == MEMORY) begin
+		if (STAGE == MEMORY) begin //BROKEN
 			DATA_IN <= prog_mem[DATA_ADDR];
 			case (CYCLE)
 				0 : begin
@@ -509,16 +522,20 @@ module HoloRiscV (
 					CYCLE <= 1;
 				end
 				1 : begin
-					DATA_ADDR <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+					//DATA_ADDR <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+					DATA_ADDR <= SRC1;
 					CYCLE <= 2;
 				end
 				2 : begin
+					CYCLE <= 3;
+				end
+				3 : begin
 					case (CMD[6:0])
 						LOAD : begin
 							case (F3)
 								LB : begin
 									DEST <= {{24{DATA_IN[7]}},DATA_IN};
-									CYCLE <= 3;
+									CYCLE <= 4;
 								end
 								LH : begin
 									case (SCYCLE)
@@ -533,7 +550,7 @@ module HoloRiscV (
 										2 : begin
 											DEST[31:8] <= {{16{DATA_IN[7]}},DATA_IN};
 											SCYCLE <= 0;
-											CYCLE <= 3;
+											CYCLE <= 4;
 										end
 										default : begin
 										end
@@ -568,7 +585,7 @@ module HoloRiscV (
 										6 : begin
 											DEST[31:24] <= DATA_IN;
 											SCYCLE <= 0;
-											CYCLE <= 3;
+											CYCLE <= 4;
 										end
 										default : begin
 										end
@@ -576,7 +593,7 @@ module HoloRiscV (
 								end
 								LBU : begin
 									DEST <= {{24{1'b0}},DATA_IN};
-									CYCLE <= 3;
+									CYCLE <= 4;
 								end
 								LHU : begin
 									case (SCYCLE)
@@ -590,7 +607,7 @@ module HoloRiscV (
 										end
 										2 : begin
 											DEST[31:8] <= {{16{1'b0}},DATA_IN};
-											CYCLE <= 3;
+											CYCLE <= 4;
 											SCYCLE <= 0;
 										end
 										default : begin
@@ -605,7 +622,7 @@ module HoloRiscV (
 							case (F3)
 								SB : begin
 									DATA_OUT <= SRC2[7:0];
-									CYCLE <= 3;
+									CYCLE <= 4;
 								end
 								SH : begin
 									case (SCYCLE)
@@ -620,7 +637,7 @@ module HoloRiscV (
 										2 : begin
 											DATA_OUT <= SRC2[15:8];
 											SCYCLE <= 0;
-											CYCLE <= 3;
+											CYCLE <= 4;
 										end
 										default : begin
 										end
@@ -655,7 +672,7 @@ module HoloRiscV (
 										6 : begin
 											DATA_OUT <= SRC2[31:24];
 											SCYCLE <= 0;
-											CYCLE <= 3;
+											CYCLE <= 4;
 										end
 										default : begin
 										end
@@ -666,11 +683,11 @@ module HoloRiscV (
 							endcase
 						end
 						default : begin
-							CYCLE <= 3;
+							CYCLE <= 4;
 						end
 					endcase
 				end
-				3 : begin
+				4 : begin
 					STAGE <= WRITEBACK;
 					CYCLE <= 0;
 					SCYCLE <= 0;
@@ -680,11 +697,12 @@ module HoloRiscV (
 			endcase
 		end
 		//WRITEBACK
-		if (STAGE == WRITEBACK) begin
+		if (STAGE == WRITEBACK) begin //FUNCTIONAL
 			case (CYCLE)
 				0 : begin
 					REG_FILE[RD] <= DEST;
 					PC <= PC + 4;
+					INSTR <= INSTR + 1;
 					CYCLE <= 1;
 				end
 				1 : begin

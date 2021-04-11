@@ -32,7 +32,7 @@ module SPI (
     parameter WRITE = 8'b00000010;
 
     //Define I/O
-    reg SCK = 0;
+    reg SCK = 1;
     reg SI = 0;
     reg SO;
     reg nCS1 = 1;
@@ -47,6 +47,7 @@ module SPI (
     reg SPI_OUT = 1'b0;
     reg [7:0] SPI_CMD = WRITE;
     reg [7:0] DOUT = 8'b10010101;
+    reg [7:0] STATUS;
 
     //Define intermediates
     reg [23:0] SPI_ADDR = 9003910;
@@ -62,6 +63,8 @@ module SPI (
             0 : begin
                 nCS1 <= 0;
                 CYCLE <= 1;
+                //SCK <= !SCK;
+                SCK <= 0;
             end
             1 : begin
                 case (SCYCLE)
@@ -126,7 +129,20 @@ module SPI (
                         
                     end
                     WRSR : begin
-                        
+                        case (SCYCLE)
+                            0 : begin
+                                SCK <= !SCK;
+                                SCYCLE <= 1;
+                            end
+                            1 : begin
+                                SCK <= !SCK;
+                                case (PHASE)
+                                    0 : begin
+                                        
+                                    end
+                                endcase
+                            end
+                        endcase
                     end
                     READ : begin
                         case (SCYCLE)
@@ -526,6 +542,8 @@ module SPI (
                                                 SO <= DOUT[0];
                                                 BIT <= 0;
                                                 CYCLE <= 0;
+                                                PHASE <= 0;
+                                                //SCK <= !SCK;
                                             end
                                         endcase
                                     end

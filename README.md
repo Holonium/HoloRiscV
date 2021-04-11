@@ -9,3 +9,5 @@ In this version, the EXECUTE code is present, but has trouble with pipeline cont
 The current goals are to finish writing the code and to find an efficient way to test it with an SPI interface.
 
 The design is going to be using a 10 MHz internal clock with 5 MHz SPI chips being used as the instruction and data memories. At this point, the original intention of having the external memory be a parallel form has been discarded due to the limitations of the sky130 PDK in terms of I/O speeds.
+
+Although there is implementation code, that code is currently outdated, having been intended for use with parallel flash instead of SPI flash.

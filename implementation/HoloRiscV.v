@@ -4,10 +4,9 @@ This version of the core is designed for implementation on a chip. Currently, on
 The exception to this is the EBREAK, ECALL, and FENCE instructions.
 The pipeline is composed of 5 stages, none of which currently run in parallel.
 
-The code expects a 20 MHz clock input.
+The code expects a 10 MHz clock input.
 
-This code is designed for use with up to 1 Gb parallel flash with separate address and data buses.
-The data bus is expected to be 8 bits wide, future implementations may work with 16 bit wide data buses.
+In this revision, the parallel flash has been changed in favor of SPI flash.
 
 */
 

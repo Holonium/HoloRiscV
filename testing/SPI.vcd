@@ -1,5 +1,5 @@
 $date
-	Sun Apr 11 17:14:43 2021
+	Sun Apr 11 21:48:22 2021
 $end
 $version
 	Icarus Verilog
@@ -791,271 +791,172 @@ b1000100 +
 0!
 0(
 #10150
-b1000101 +
-1'
-b0xxxxxxxxxxxxxxxxxx &
+1)
 1(
 #10200
 1!
 0(
 #10250
-b0xxxxxxxxxxxxxxxxxx0 &
-0'
-b1000110 +
 1(
 #10300
 0!
 0(
 #10350
-b1000111 +
-1'
-b0xxxxxxxxxxxxxxxxxxx &
 1(
 #10400
 1!
 0(
 #10450
-b0xxxxxxxxxxxxxxxxxxx0 &
-0'
-b1001000 +
 1(
 #10500
 0!
 0(
 #10550
-b1001001 +
-1'
-b0xxxxxxxxxxxxxxxxxxxx &
 1(
 #10600
 1!
 0(
 #10650
-b0xxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1001010 +
 1(
 #10700
 0!
 0(
 #10750
-b1001011 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxx &
 1(
 #10800
 1!
 0(
 #10850
-b0xxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1001100 +
 1(
 #10900
 0!
 0(
 #10950
-b1001101 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxx &
 1(
 #11000
 1!
 0(
 #11050
-b0xxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1001110 +
 1(
 #11100
 0!
 0(
 #11150
-b1001111 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #11200
 1!
 0(
 #11250
-b0xxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1010000 +
 1(
 #11300
 0!
 0(
 #11350
-b1010001 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #11400
 1!
 0(
 #11450
-b0xxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1010010 +
 1(
 #11500
 0!
 0(
 #11550
-b1010011 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #11600
 1!
 0(
 #11650
-b0xxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1010100 +
 1(
 #11700
 0!
 0(
 #11750
-b1010101 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #11800
 1!
 0(
 #11850
-b0xxxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1010110 +
 1(
 #11900
 0!
 0(
 #11950
-b1010111 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #12000
 1!
 0(
 #12050
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1011000 +
 1(
 #12100
 0!
 0(
 #12150
-b1011001 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #12200
 1!
 0(
 #12250
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1011010 +
 1(
 #12300
 0!
 0(
 #12350
-b1011011 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #12400
 1!
 0(
 #12450
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1011100 +
 1(
 #12500
 0!
 0(
 #12550
-b1011101 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #12600
 1!
 0(
 #12650
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx0 &
-0'
-b1011110 +
 1(
 #12700
 0!
 0(
 #12750
-b1011111 +
-1'
-b0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx &
 1(
 #12800
 1!
 0(
 #12850
-bx0 &
-0'
-b1100000 +
 1(
 #12900
 0!
 0(
 #12950
-b1100001 +
-1'
-bx &
 1(
 #13000
 1!
 0(
 #13050
-bx0 &
-0'
-b1100010 +
 1(
 #13100
 0!
 0(
 #13150
-b1100011 +
-1'
-bx &
 1(
 #13200
 1!
 0(
 #13250
-bx0 &
-0'
-b1100100 +
 1(
 #13300
 0!
 0(
 #13350
-b1100101 +
-1'
-bx &
 1(
 #13400
 1!
 0(
 #13450
-1)
 1(
 #13500
 0!

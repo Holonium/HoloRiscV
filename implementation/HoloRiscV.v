@@ -125,6 +125,7 @@ module HoloRiscV (
 	reg [31:0] EXTENDED = 0;
 	reg [31:0] SPI_IN = 0;
 	reg [31:0] SPI_BUF;
+	reg [31:0] SPI_ADDR;
 
 	always @(posedge clk) begin
 		REG_FILE[0] <= 0;
@@ -244,13 +245,9 @@ module HoloRiscV (
 						R : begin
 							SRC2 <= REG_FILE[RS2];
 							SRC1 <= REG_FILE[RS1];
-							//SRC1 <= {1'b1,31'b110000000};
-							//SRC2 <= 32'b1110010;
 						end
 						I : begin
 							SRC1 <= REG_FILE[RS1];
-							//SRC1 <= {1'b0,7'b1,24'b0};
-							//SRC1 <= {22'b111111111,10'b1111100};
 						end
 						S : begin
 							SRC2 <= REG_FILE[RS2];
@@ -268,8 +265,6 @@ module HoloRiscV (
 				3 : begin
 					CYCLE <= 0;
 					STAGE <= EXECUTE;
-					//STAGE <= FETCH;
-					//PC <= PC + 4;
 				end
 			endcase
 		end
@@ -317,7 +312,6 @@ module HoloRiscV (
 									CYCLE <= 1;
 								end
 								3 : begin
-									//STAGE <= MEMORY;
 									SCYCLE <= 0;
 									CYCLE <= 1;
 								end
@@ -387,17 +381,14 @@ module HoloRiscV (
 									CYCLE <= 1;
 								end
 								XORI : begin //FUNCTIONAL
-									//DEST <= SRC1 ^ {{20{IMM[11]}},IMM[11:0]};
 									DEST <= SRC1 ^ EXTENDED;
 									CYCLE <= 1;
 								end
 								ORI : begin //FUNCTIONAL
-									//DEST <= SRC1 | {{20{IMM[11]}},IMM[11:0]};
 									DEST <= SRC1 | EXTENDED;
 									CYCLE <= 1;
 								end
 								ANDI : begin //FUNCTIONAL
-									//DEST <= SRC1 & {{20{IMM[11]}},IMM[11:0]};
 									DEST <= SRC1 ^ EXTENDED;
 									CYCLE <= 1;
 								end
@@ -494,7 +485,122 @@ module HoloRiscV (
 		end
 		//MEMORY
 		if (STAGE == MEMORY) begin
-			
+			case (CYCLE)
+				0 : begin
+					case (CMD[6:0])
+						LOAD : begin
+							
+						end
+						STORE : begin
+							SPI_BUF[31:24] <= WREN;
+							if (i < 9) begin
+								if (i == 0) begin
+									nCS <= 0;
+									i <= i + 1;
+								end
+								else begin
+									case (SSTAGE)
+										0 : begin
+											SO <= SPI_BUF[31];
+											SSTAGE <= 1;
+										end
+										1 : begin
+											i <= i + 1;
+											SSTAGE <= 0;
+											SPI_BUF <= SPI_BUF << 1;
+										end
+									endcase
+								end
+							end
+							else begin
+								nCS <= 1;
+								SSTAGE <= 0;
+								i <= 0;
+								CYCLE <= 1;
+							end
+						end
+						default : begin
+						end
+					endcase
+				end
+				1 : begin
+					SPI_ADDR <= SRC1 + {{20{IMM[11]}},IMM[11:0]};
+					CYCLE <= 2;
+				end
+				2 : begin
+					SPI_BUF <= {READ,SPI_ADDR[23:0]};
+					CYCLE <= 3;
+				end
+				3 : begin
+					case (CMD[6:0])
+						LOAD : begin
+							if (i < 101) begin
+								if (i == 0) begin
+									nCS <= 0;
+									i <= i + 1;
+								end
+								else if (i < 34) begin
+									case (SSTAGE)
+										0 : begin
+											SO <= SPI_BUF[31];
+											SSTAGE <= 1;
+										end
+										1 : begin
+											i <= i + 1;
+											SSTAGE <= 0;
+											SPI_BUF <= SPI_BUF << 1;
+										end
+									endcase
+								end
+								else begin
+									case (SSTAGE)
+										0 : begin
+											SPI_IN[0] <= SI;
+											SSTAGE <= 1;
+										end
+										1 : begin
+											i <= i + 1;
+											SSTAGE <= 0;
+											SPI_IN <= SPI_IN << 1;
+										end
+									endcase
+								end
+							end
+							else begin
+								nCS <= 1;
+								CYCLE <= 4;
+							end
+						end
+					endcase
+				end
+				4 : begin
+					case (CMD[6:0])
+						LOAD : begin
+							case (F3)
+								LB : begin
+									DEST <= {{24{SPI_IN[7]}},SPI_IN[7:0]};
+									CYCLE <= 5;
+								end
+								LH : begin
+									DEST <= {{16{SPI_IN[15]}},SPI_IN[15:0]};
+									CYCLE <= 5;
+								end
+								LW : begin
+									DEST <= SPI_IN;
+									CYCLE <= 5;
+								end
+							endcase
+						end
+					endcase
+				end
+				5 : begin
+					i <= 0;
+					STAGE <= WRITEBACK;
+					SSTAGE <= 0;
+					CYCLE <= 0;
+					SCYCLE <= 0;
+				end
+			endcase
 		end
 		//WRITEBACK
 		if (STAGE == WRITEBACK) begin

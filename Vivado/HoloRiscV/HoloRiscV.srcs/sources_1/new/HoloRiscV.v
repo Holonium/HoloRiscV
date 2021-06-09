@@ -155,18 +155,19 @@ module HoloRiscV(
         .clk(core_clk), 
         .active(execute_active), 
         .opcode(opcode), 
-        .type(type), 
-        .rd(rd), 
+//        .type(type), 
+//        .rd(rd), 
         .f3(f3), 
-        .rs1(rs1), 
-        .rs2(rs2), 
-        .f7(f7), 
+//        .rs1(rs1), 
+//        .rs2(rs2), 
+//        .f7(f7), 
         .extended(extended), 
         .src1(reg_file[rs1]), 
         .src2(reg_file[rs2]),
         .pc_in(pc), 
         .imm(imm),
-        .cmd(cmd),
+//        .cmd(cmd),
+        .cmd30(cmd[30]),
         .dest(dest_ex),
         .pc_out(pc_temp),
         .done(execute_done)
@@ -192,22 +193,22 @@ module HoloRiscV(
     );
     
     always @(posedge core_clk) begin
-        if (fetch_done) begin
+        if (fetch_active && fetch_done) begin
             fetch_active <= 0;
             decode_active <= 1;
         end
-        if (decode_done) begin
+        if (decode_active && decode_done) begin
             decode_active <= 0;
             execute_active <= 1;
             reg_file[rs1] <= 5;
             reg_file[rs2] <= 9;
         end
-        if (execute_done) begin
+        if (execute_active && execute_done) begin
             execute_active <= 0;
             memory_active <= 1;
 //            writeback_active <= 1;
         end
-        if (memory_done) begin
+        if (memory_active && memory_done) begin
             memory_active <= 0;
             writeback_active <= 1;
         end

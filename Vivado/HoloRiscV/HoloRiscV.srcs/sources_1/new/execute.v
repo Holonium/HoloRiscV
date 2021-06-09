@@ -23,18 +23,18 @@ module execute (
     input clk,
     input active,
     input [6:0] opcode,
-    input [2:0] type,
-    input [4:0] rd,
+//    input [2:0] type,
+//    input [4:0] rd,
     input [2:0] f3,
-    input [4:0] rs1,
-    input [4:0] rs2,
-    input [6:0] f7,
+//    input [4:0] rs1,
+//    input [4:0] rs2,
+//    input [6:0] f7,
     input [31:0] extended,
     input [31:0] src1,
     input [31:0] src2,
     input [31:0] pc_in,
     input [31:0] imm,
-    input [31:0] cmd,
+    input cmd30,
     output reg [31:0] dest,
     output reg [31:0] pc_out,
     output reg done = 0
@@ -212,13 +212,13 @@ module execute (
                                     cycle <= 1;
                                 end
                                 SLLI : begin
-                                    dest <= src1 << cmd[24:20];
+                                    dest <= src1 << imm[4:0];
                                     cycle <= 1;
                                 end
                                 SRI : begin
-                                    case (cmd[30])
-                                        0 : dest <= src1 >> cmd[24:20];
-                                        1 : dest <= $signed(src1) >>> cmd[24:20];
+                                    case (cmd30)
+                                        0 : dest <= src1 >> imm[4:0];
+                                        1 : dest <= $signed(src1) >>> imm[4:0];
                                     endcase
                                     cycle <= 1;
                                 end
@@ -227,7 +227,7 @@ module execute (
                         ALU : begin
                             case (f3)
                                 ADD : begin
-                                    case (cmd[30])
+                                    case (cmd30)
                                         0 : dest <= src1 + src2;
                                         1 : dest <= src1 - src2;
                                     endcase
@@ -252,7 +252,7 @@ module execute (
                                     cycle <= 1;
                                 end
                                 SR : begin
-                                    case (cmd[30])
+                                    case (cmd30)
                                         0 : dest <= src1 >> src2[4:0];
                                         1 : dest <= $signed(src1) >>> src2[4:0];
                                     endcase

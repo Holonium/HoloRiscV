@@ -11,8 +11,10 @@ Time Resolution for simulation is 1ps
 Compiling module unisims_ver.MMCME2_ADV(CLKFBOUT_MULT_F=10.0,...
 Compiling module unisims_ver.MMCME2_BASE(CLKFBOUT_MULT_F=10.0...
 Compiling module unisims_ver.BUFGCE
+Compiling module xil_defaultlib.fetch
 Compiling module xil_defaultlib.decode
 Compiling module xil_defaultlib.execute
+Compiling module xil_defaultlib.memory
 Compiling module xil_defaultlib.HoloRiscV
 Compiling module xil_defaultlib.HoloRiscV_TB
 Compiling module xil_defaultlib.glbl

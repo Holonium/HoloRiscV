@@ -1,0 +1,426 @@
+
+*** Running vivado
+    with args -log HoloRiscV.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source HoloRiscV.tcl
+
+
+
+****** Vivado v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source HoloRiscV.tcl -notrace
+Command: synth_design -top HoloRiscV -part xc7a35ticsg324-1L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 14900
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'HoloRiscV' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:29]
+	Parameter LOAD bound to: 7'b0000011 
+INFO: [Synth 8-6157] synthesizing module 'MMCME2_BASE' [C:/Xilinx/Vivado/2020.2/scripts/rt/data/unisim_comp.v:40118]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 10.000000 - type: double 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE_F bound to: 10.000000 - type: double 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT1_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT3_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT4_CASCADE bound to: FALSE - type: string 
+	Parameter CLKOUT4_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT5_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT6_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT6_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT6_PHASE bound to: 0.000000 - type: double 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter REF_JITTER1 bound to: 0.000000 - type: double 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'MMCME2_BASE' (1#1) [C:/Xilinx/Vivado/2020.2/scripts/rt/data/unisim_comp.v:40118]
+WARNING: [Synth 8-7071] port 'CLKFBOUTB' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT0B' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT1B' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT2' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT2B' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT3' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT3B' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT4' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT5' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7071] port 'CLKOUT6' of module 'MMCME2_BASE' is unconnected for instance 'MMCME2_BASE_inst' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+WARNING: [Synth 8-7023] instance 'MMCME2_BASE_inst' of module 'MMCME2_BASE' has 18 connections declared, but only 8 given [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:53]
+INFO: [Synth 8-6157] synthesizing module 'BUFGCE' [C:/Xilinx/Vivado/2020.2/scripts/rt/data/unisim_comp.v:1093]
+	Parameter CE_TYPE bound to: SYNC - type: string 
+	Parameter IS_CE_INVERTED bound to: 1'b0 
+	Parameter IS_I_INVERTED bound to: 1'b0 
+	Parameter SIM_DEVICE bound to: ULTRASCALE - type: string 
+	Parameter STARTUP_SYNC bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'BUFGCE' (2#1) [C:/Xilinx/Vivado/2020.2/scripts/rt/data/unisim_comp.v:1093]
+INFO: [Synth 8-6157] synthesizing module 'fetch' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/fetch.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'fetch' (3#1) [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/fetch.v:23]
+INFO: [Synth 8-6157] synthesizing module 'decode' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/decode.v:22]
+	Parameter LUI bound to: 7'b0110111 
+	Parameter AUIPC bound to: 7'b0010111 
+	Parameter JAL bound to: 7'b1101111 
+	Parameter JALR bound to: 7'b1100111 
+	Parameter BRANCH bound to: 7'b1100011 
+	Parameter LOAD bound to: 7'b0000011 
+	Parameter STORE bound to: 7'b0100011 
+	Parameter ALUI bound to: 7'b0010011 
+	Parameter ALU bound to: 7'b0110011 
+	Parameter R bound to: 3'b001 
+	Parameter I bound to: 3'b010 
+	Parameter S bound to: 3'b011 
+	Parameter B bound to: 3'b100 
+	Parameter U bound to: 3'b101 
+	Parameter J bound to: 3'b110 
+INFO: [Synth 8-6155] done synthesizing module 'decode' (4#1) [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/decode.v:22]
+INFO: [Synth 8-6157] synthesizing module 'execute' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/execute.v:22]
+	Parameter LUI bound to: 7'b0110111 
+	Parameter AUIPC bound to: 7'b0010111 
+	Parameter JAL bound to: 7'b1101111 
+	Parameter JALR bound to: 7'b1100111 
+	Parameter BRANCH bound to: 7'b1100011 
+	Parameter LOAD bound to: 7'b0000011 
+	Parameter STORE bound to: 7'b0100011 
+	Parameter ALUI bound to: 7'b0010011 
+	Parameter ALU bound to: 7'b0110011 
+	Parameter ADDI bound to: 3'b000 
+	Parameter SLTI bound to: 3'b010 
+	Parameter SLTIU bound to: 3'b011 
+	Parameter XORI bound to: 3'b100 
+	Parameter ORI bound to: 3'b110 
+	Parameter ANDI bound to: 3'b111 
+	Parameter SLLI bound to: 3'b001 
+	Parameter SRI bound to: 3'b101 
+	Parameter ADD bound to: 3'b000 
+	Parameter SLL bound to: 3'b001 
+	Parameter SLT bound to: 3'b010 
+	Parameter SLTU bound to: 3'b011 
+	Parameter XOR bound to: 3'b100 
+	Parameter SR bound to: 3'b101 
+	Parameter OR bound to: 3'b110 
+	Parameter AND bound to: 3'b111 
+	Parameter BEQ bound to: 3'b000 
+	Parameter BNE bound to: 3'b001 
+	Parameter BLT bound to: 3'b100 
+	Parameter BGE bound to: 3'b101 
+	Parameter BLTU bound to: 3'b110 
+	Parameter BGEU bound to: 3'b111 
+	Parameter LB bound to: 3'b000 
+	Parameter LH bound to: 3'b001 
+	Parameter LW bound to: 3'b010 
+	Parameter LBU bound to: 3'b100 
+	Parameter LHU bound to: 3'b101 
+	Parameter SB bound to: 3'b000 
+	Parameter SH bound to: 3'b001 
+	Parameter SW bound to: 3'b010 
+	Parameter R bound to: 3'b001 
+	Parameter I bound to: 3'b010 
+	Parameter S bound to: 3'b011 
+	Parameter B bound to: 3'b100 
+	Parameter U bound to: 3'b101 
+	Parameter J bound to: 3'b110 
+INFO: [Synth 8-6155] done synthesizing module 'execute' (5#1) [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/execute.v:22]
+INFO: [Synth 8-6157] synthesizing module 'memory' [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/memory.v:22]
+	Parameter LOAD bound to: 7'b0000011 
+	Parameter STORE bound to: 7'b0100011 
+	Parameter LB bound to: 3'b000 
+	Parameter LH bound to: 3'b001 
+	Parameter LW bound to: 3'b010 
+	Parameter LBU bound to: 3'b100 
+	Parameter LHU bound to: 3'b101 
+	Parameter SB bound to: 3'b000 
+	Parameter SH bound to: 3'b001 
+	Parameter SW bound to: 3'b010 
+INFO: [Synth 8-6155] done synthesizing module 'memory' (6#1) [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/memory.v:22]
+INFO: [Synth 8-6155] done synthesizing module 'HoloRiscV' (7#1) [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:29]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.074 . Memory (MB): peak = 999.449 ; gain = 0.000
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'core' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'spi' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'core' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'spi' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/pins.xdc]
+Finished Parsing XDC File [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/pins.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/pins.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/HoloRiscV_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/HoloRiscV_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/timing.xdc]
+Finished Parsing XDC File [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/timing.xdc]
+INFO: [Timing 38-2] Deriving generated clocks
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 999.449 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 3 instances were transformed.
+  BUFGCE => BUFGCTRL: 2 instances
+  MMCME2_BASE => MMCME2_ADV: 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.011 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35ticsg324-1L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'cycle_reg' in module 'fetch'
+INFO: [Synth 8-802] inferred FSM for state register 'scycle_reg' in module 'fetch'
+INFO: [Synth 8-802] inferred FSM for state register 'cycle_reg' in module 'decode'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                               00 |                              000
+                 iSTATE2 |                               01 |                              001
+                 iSTATE0 |                               10 |                              010
+                 iSTATE1 |                               11 |                              011
+*
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'scycle_reg' using encoding 'sequential' in module 'fetch'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 iSTATE0 |                           000001 |                              000
+                 iSTATE1 |                           000010 |                              001
+                 iSTATE4 |                           000100 |                              010
+                 iSTATE2 |                           001000 |                              011
+                 iSTATE3 |                           010000 |                              100
+                  iSTATE |                           100000 |                              101
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'cycle_reg' using encoding 'one-hot' in module 'fetch'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                              001 |                               00
+                 iSTATE0 |                              010 |                               01
+                 iSTATE1 |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'cycle_reg' using encoding 'one-hot' in module 'decode'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 6     
+	   3 Input   32 Bit       Adders := 1     
+	   2 Input   24 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 2     
+	   2 Input    4 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 2     
++---Registers : 
+	               32 Bit    Registers := 44    
+	               24 Bit    Registers := 1     
+	                8 Bit    Registers := 1     
+	                7 Bit    Registers := 4     
+	                5 Bit    Registers := 3     
+	                4 Bit    Registers := 3     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 19    
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 67    
+	   4 Input   32 Bit        Muxes := 14    
+	   6 Input   32 Bit        Muxes := 2     
+	   7 Input   32 Bit        Muxes := 5     
+	   3 Input   32 Bit        Muxes := 1     
+	  10 Input   32 Bit        Muxes := 1     
+	   5 Input    6 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 33    
+	   4 Input    4 Bit        Muxes := 1     
+	  10 Input    3 Bit        Muxes := 1     
+	  13 Input    3 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 4     
+	   3 Input    2 Bit        Muxes := 1     
+	   5 Input    2 Bit        Muxes := 7     
+	   8 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 118   
+	   4 Input    1 Bit        Muxes := 23    
+	   6 Input    1 Bit        Muxes := 12    
+	  10 Input    1 Bit        Muxes := 5     
+	   7 Input    1 Bit        Muxes := 16    
+	   3 Input    1 Bit        Muxes := 50    
+	   8 Input    1 Bit        Muxes := 1     
+	  11 Input    1 Bit        Muxes := 11    
+	  14 Input    1 Bit        Muxes := 2     
+	  12 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:33 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 999.449 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:53 ; elapsed = 00:00:53 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------------+------+
+|      |Cell        |Count |
++------+------------+------+
+|1     |BUFGCE      |     2|
+|2     |MMCME2_BASE |     1|
+|3     |IBUF        |     1|
+|4     |OBUF        |     5|
+|5     |OBUFT       |     1|
++------+------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:46 ; elapsed = 00:00:54 . Memory (MB): peak = 1149.902 ; gain = 150.453
+Synthesis Optimization Complete : Time (s): cpu = 00:00:56 ; elapsed = 00:00:57 . Memory (MB): peak = 1149.902 ; gain = 150.453
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1149.902 ; gain = 0.000
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'core' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'spi' of type 'BUFGCE' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'core' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'spi' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1149.902 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 3 instances were transformed.
+  BUFGCE => BUFGCTRL: 2 instances
+  MMCME2_BASE => MMCME2_ADV: 1 instance 
+
+INFO: [Common 17-83] Releasing license: Synthesis
+38 Infos, 19 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:01 ; elapsed = 00:01:03 . Memory (MB): peak = 1149.902 ; gain = 150.453
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.runs/synth_1/HoloRiscV.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file HoloRiscV_utilization_synth.rpt -pb HoloRiscV_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Jun  9 08:29:43 2021...

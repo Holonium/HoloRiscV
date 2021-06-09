@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="HoloRiscV_TB_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="HoloRiscV_TB" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="2000001fs"></ZoomEndTime>
+      <Cursor1Time time="1211538fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="242"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="28" />
+   <wvobject fp_name="/HoloRiscV_TB/ja_mosi" type="logic">
+      <obj_property name="ElementShortName">ja_mosi</obj_property>
+      <obj_property name="ObjectShortName">ja_mosi</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_cs" type="logic">
+      <obj_property name="ElementShortName">ja_cs</obj_property>
+      <obj_property name="ObjectShortName">ja_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/spi_sck" type="logic">
+      <obj_property name="ElementShortName">spi_sck</obj_property>
+      <obj_property name="ObjectShortName">spi_sck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_sck" type="logic">
+      <obj_property name="ElementShortName">ja_sck</obj_property>
+      <obj_property name="ObjectShortName">ja_sck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_rst" type="logic">
+      <obj_property name="ElementShortName">ja_rst</obj_property>
+      <obj_property name="ObjectShortName">ja_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_wp" type="logic">
+      <obj_property name="ElementShortName">ja_wp</obj_property>
+      <obj_property name="ObjectShortName">ja_wp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_hld" type="logic">
+      <obj_property name="ElementShortName">ja_hld</obj_property>
+      <obj_property name="ObjectShortName">ja_hld</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/ja_miso" type="logic">
+      <obj_property name="ElementShortName">ja_miso</obj_property>
+      <obj_property name="ObjectShortName">ja_miso</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/locked" type="logic">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/decode_done" type="logic">
+      <obj_property name="ElementShortName">decode_done</obj_property>
+      <obj_property name="ObjectShortName">decode_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/execute_done" type="logic">
+      <obj_property name="ElementShortName">execute_done</obj_property>
+      <obj_property name="ObjectShortName">execute_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/decode_active" type="logic">
+      <obj_property name="ElementShortName">decode_active</obj_property>
+      <obj_property name="ObjectShortName">decode_active</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/execute_active" type="logic">
+      <obj_property name="ElementShortName">execute_active</obj_property>
+      <obj_property name="ObjectShortName">execute_active</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/reg_file" type="array">
+      <obj_property name="ElementShortName">reg_file[0:31][31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_file[0:31][31:0]</obj_property>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[0]" type="array">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[1]" type="array">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[2]" type="array">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[3]" type="array">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[4]" type="array">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[5]" type="array">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[6]" type="array">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[7]" type="array">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[8]" type="array">
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[9]" type="array">
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[10]" type="array">
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[11]" type="array">
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[12]" type="array">
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[13]" type="array">
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[14]" type="array">
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[15]" type="array">
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[16]" type="array">
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[17]" type="array">
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[18]" type="array">
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[19]" type="array">
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[20]" type="array">
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[21]" type="array">
+         <obj_property name="ElementShortName">[21][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[22]" type="array">
+         <obj_property name="ElementShortName">[22][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[23]" type="array">
+         <obj_property name="ElementShortName">[23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[24]" type="array">
+         <obj_property name="ElementShortName">[24][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[24][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[25]" type="array">
+         <obj_property name="ElementShortName">[25][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[25][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[26]" type="array">
+         <obj_property name="ElementShortName">[26][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[26][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[27]" type="array">
+         <obj_property name="ElementShortName">[27][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[27][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[28]" type="array">
+         <obj_property name="ElementShortName">[28][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[28][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[29]" type="array">
+         <obj_property name="ElementShortName">[29][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[29][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[30]" type="array">
+         <obj_property name="ElementShortName">[30][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[30][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[31]" type="array">
+         <obj_property name="ElementShortName">[31][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[31][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[0]" type="array">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[1]" type="array">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[2]" type="array">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[3]" type="array">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[4]" type="array">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[5]" type="array">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[6]" type="array">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[7]" type="array">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[8]" type="array">
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[9]" type="array">
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[10]" type="array">
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[11]" type="array">
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[12]" type="array">
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[13]" type="array">
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[14]" type="array">
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[15]" type="array">
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[16]" type="array">
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[17]" type="array">
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[18]" type="array">
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[19]" type="array">
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[20]" type="array">
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[21]" type="array">
+         <obj_property name="ElementShortName">[21][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[22]" type="array">
+         <obj_property name="ElementShortName">[22][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[23]" type="array">
+         <obj_property name="ElementShortName">[23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[24]" type="array">
+         <obj_property name="ElementShortName">[24][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[24][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[25]" type="array">
+         <obj_property name="ElementShortName">[25][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[25][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[26]" type="array">
+         <obj_property name="ElementShortName">[26][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[26][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[27]" type="array">
+         <obj_property name="ElementShortName">[27][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[27][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[28]" type="array">
+         <obj_property name="ElementShortName">[28][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[28][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[29]" type="array">
+         <obj_property name="ElementShortName">[29][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[29][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[30]" type="array">
+         <obj_property name="ElementShortName">[30][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[30][31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/HoloRiscV_TB/tb/reg_file[31]" type="array">
+         <obj_property name="ElementShortName">[31][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[31][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/cmd" type="array">
+      <obj_property name="ElementShortName">cmd[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cmd[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/opcode" type="array">
+      <obj_property name="ElementShortName">opcode[6:0]</obj_property>
+      <obj_property name="ObjectShortName">opcode[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/type" type="array">
+      <obj_property name="ElementShortName">type[2:0]</obj_property>
+      <obj_property name="ObjectShortName">type[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/rd" type="array">
+      <obj_property name="ElementShortName">rd[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rd[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/f3" type="array">
+      <obj_property name="ElementShortName">f3[2:0]</obj_property>
+      <obj_property name="ObjectShortName">f3[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/rs1" type="array">
+      <obj_property name="ElementShortName">rs1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rs1[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/rs2" type="array">
+      <obj_property name="ElementShortName">rs2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rs2[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/f7" type="array">
+      <obj_property name="ElementShortName">f7[6:0]</obj_property>
+      <obj_property name="ObjectShortName">f7[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/extended" type="array">
+      <obj_property name="ElementShortName">extended[31:0]</obj_property>
+      <obj_property name="ObjectShortName">extended[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/imm" type="array">
+      <obj_property name="ElementShortName">imm[31:0]</obj_property>
+      <obj_property name="ObjectShortName">imm[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dest" type="array">
+      <obj_property name="ElementShortName">dest[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dest[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/pc" type="array">
+      <obj_property name="ElementShortName">pc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/pc_temp" type="array">
+      <obj_property name="ElementShortName">pc_temp[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_temp[31:0]</obj_property>
+   </wvobject>
+</wave_config>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1623265155">
+<GenRun Id="synth_1" LaunchPart="xc7a35ticsg324-1L" LaunchTime="1623267979">
   <File Type="PA-TCL" Name="HoloRiscV.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="HoloRiscV_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="HoloRiscV_reports.tcl"/>

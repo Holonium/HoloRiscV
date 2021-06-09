@@ -24,7 +24,7 @@ module fetch(
     input clk,
     input active,
     input miso,
-    input [31:0] instr,
+    input [23:0] instr,
     output reg mosi = 1,
     output reg sck = 1,
     output reg cs = 1,

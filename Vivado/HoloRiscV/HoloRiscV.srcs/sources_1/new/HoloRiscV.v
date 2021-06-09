@@ -91,6 +91,9 @@ module HoloRiscV(
     wire [31:0] extended;
     wire [31:0] imm;
     
+    reg [31:0] mem_src1;
+    reg [31:0] mem_src2;
+    
     wire [31:0] dest_ex;
     wire [31:0] dest_mem;
     reg [31:0] pc = 0;
@@ -127,7 +130,7 @@ module HoloRiscV(
         .clk(spi_ack),
         .active(fetch_active),
         .miso(ja_miso),
-        .instr(pc),
+        .instr(pc[23:0]),
         .mosi(fetch_mosi),
         .sck(fetch_sck),
         .cs(fetch_cs),
@@ -177,12 +180,12 @@ module HoloRiscV(
         .clk(spi_sck),
         .active(memory_active),
         .miso(ja_miso),
-        .src1(reg_file[rs1]),
-        .src2(reg_file[rs2]),
-        .imm(imm),
+        .src1(mem_src1[23:0]),
+        .src2(mem_src2[23:0]),
+        .imm(imm[23:0]),
         .f3(f3),
         .opcode(opcode),
-        .pc(pc),
+//        .pc(pc),
         .mosi(mem_mosi),
         .sck(mem_sck),
         .wp(ja_wp),
@@ -200,12 +203,14 @@ module HoloRiscV(
         if (decode_active && decode_done) begin
             decode_active <= 0;
             execute_active <= 1;
-            reg_file[rs1] <= 5;
-            reg_file[rs2] <= 9;
+//            reg_file[rs1] <= 5;
+//            reg_file[rs2] <= 9;
         end
         if (execute_active && execute_done) begin
             execute_active <= 0;
             memory_active <= 1;
+            mem_src1 <= reg_file[rs1];
+            mem_src2 <= reg_file[rs2];
 //            writeback_active <= 1;
         end
         if (memory_active && memory_done) begin

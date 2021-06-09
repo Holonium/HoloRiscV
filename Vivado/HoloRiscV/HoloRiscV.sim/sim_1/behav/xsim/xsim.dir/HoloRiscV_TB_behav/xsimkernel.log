@@ -2,3 +2,6 @@ Running: xsim.dir/HoloRiscV_TB_behav/xsimk.exe -simmode gui -wdb HoloRiscV_TB_be
 Design successfully loaded
 Design Loading Memory Usage: 6184 KB (Peak: 6184 KB)
 Design Loading CPU Usage: 78 ms
+Simulation completed
+Simulation Memory Usage: 7788 KB (Peak: 7788 KB)
+Simulation CPU Usage: 233 ms

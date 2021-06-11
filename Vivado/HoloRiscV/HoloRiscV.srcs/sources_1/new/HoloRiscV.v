@@ -133,7 +133,9 @@ module HoloRiscV(
     wire memory_done;
     wire incr;
     
-    reg [31:0] addr = 0;
+    reg [14:0] addr = 0;
+    wire [14:0] addr_mem = 0;
+    wire [14:0] addr_out = 0;
     
     reg [31:0] mem_in = 0;
     wire [31:0] mem_out;
@@ -174,6 +176,7 @@ module HoloRiscV(
     reg cs;
     
     reg [1:0] cycle = 0;
+    reg dinit;
     
     assign ja_sck = uart_clk;
     
@@ -194,10 +197,12 @@ module HoloRiscV(
     
     reg we = 0;
     
+    assign addr_mem[14:0] = dump_active ? addr_out[14:0] : addr[14:0];
+    
     ram memory (
         .clk(core_clk),
         .we(we),
-        .addr(addr[9:0]),
+        .addr(addr_mem[14:0]),
         .din(mem_in),
         .dout(mem_out)
     );
@@ -265,9 +270,10 @@ module HoloRiscV(
     uart dump (
         .clk(uart_clk),
         .din(mem_out),
-        .active(uart_active),
+        .active(dump_active),
         .next(incr),
-        .tx(uart_rxd_out)
+        .tx(uart_rxd_out),
+        .addr_out(addr_out[14:0])
         );
         
     //assign uart_rxd_out = uart_active ? 1'b1 : uart_tx;
@@ -280,7 +286,7 @@ module HoloRiscV(
         if (fetch_active) begin
             //cmd <= {mem_file[pc[5:0]+3],mem_file[pc[8:0]+2],mem_file[pc[8:0]+1],mem_file[pc[8:0]]};
             if (cycle == 0) begin
-                addr <= pc[9:0];
+                addr <= pc[14:0];
                 cycle <= 1;
             end
             else begin
@@ -434,11 +440,12 @@ module HoloRiscV(
             else reg_file[rd] <= dest_ex;
 //            tx <= !tx;
             if (pc == 16) begin
+                addr <= 0;
                 dump_active <= 1;
                 writeback_active <= 0;
                 fetch_active <= 0;
             end
-            else begin
+            else if (pc < 16) begin
                 pc <= pc_temp + 4;
                 writeback_active <= 0;
                 fetch_active <= 1;
@@ -447,26 +454,34 @@ module HoloRiscV(
         if (dump_active) begin
             case (cycle)
                 0 : begin
-                    addr <= 0;
-                    cycle <= 1;
-                end
-                1 : begin
-                    uart_active <= 1;
-                    cycle <= 2;
-                    if (addr == 1) dump_active <= 0;
-                end
-                2 : begin
-                    cycle <= 3;
-                end
-                3 : begin
-                    if (incr && addr < 1) begin
-                        addr <= addr + 1;
-                        uart_active <= 0;
+                    if (!dinit) begin
+                        fetch_active <= 0;
+                        decode_active <= 0;
+                        execute_active <= 0;
+                        memory_active <= 0;
+                        writeback_active <= 0;
+//                        addr <= 0;
                         cycle <= 1;
                     end
-                    else begin
-                        uart_active <= 0;
-                    end
+                end
+                1 : begin
+                    if (addr_out[0] == 1) addr[0] <= 1; 
+//                    uart_active <= 1;
+//                    cycle <= 3;
+                    if (addr_out == 3) dump_active <= 0;
+                end
+                2 : begin
+//                    cycle <= 1;
+                end
+                3 : begin
+//                    if (incr && addr_out < 3) begin
+//                        addr <= addr + 1;
+//                        uart_active <= 0;
+//                        cycle <= 2;
+//                    end
+//                    else begin
+//                        uart_active <= 1;
+//                    end
                 end
             endcase
         end
@@ -513,6 +528,7 @@ module HoloRiscV(
             reg_file[29] <= 0;
             reg_file[30] <= 0;
             reg_file[31] <= 0;
+            dinit <= 0;
             init <= 1;
             fetch_active <= 1;
         end

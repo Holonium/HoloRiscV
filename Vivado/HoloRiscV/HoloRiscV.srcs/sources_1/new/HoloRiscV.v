@@ -114,10 +114,6 @@ module HoloRiscV(
     reg [7:0] mem_file [0:511];
     reg [31:0] reg_file [0:31];
     
-    initial begin
-        $readmemh("ext.mem",mem_file);
-    end
-    
     reg init = 0;
     
     reg fetch_active = 0;
@@ -134,8 +130,8 @@ module HoloRiscV(
     wire incr;
     
     reg [14:0] addr = 0;
-    wire [14:0] addr_mem = 0;
-    wire [14:0] addr_out = 0;
+    wire [14:0] addr_mem; 
+    wire [14:0] addr_out;
     
     reg [31:0] mem_in = 0;
     wire [31:0] mem_out;
@@ -186,14 +182,6 @@ module HoloRiscV(
     /*assign ja_mosi = mosi;
     assign ja_sck = sck;
     assign ja_cs = cs;*/
-    
-    /*module ram(
-    input clk,
-    input we,
-    input [9:0] addr,
-    input [31:0] din,
-    output reg [31:0] dout
-    );*/
     
     reg we = 0;
     
@@ -465,9 +453,6 @@ module HoloRiscV(
                     end
                 end
                 1 : begin
-                    if (addr_out[0] == 1) addr[0] <= 1; 
-//                    uart_active <= 1;
-//                    cycle <= 3;
                     if (addr_out == 3) dump_active <= 0;
                 end
                 2 : begin

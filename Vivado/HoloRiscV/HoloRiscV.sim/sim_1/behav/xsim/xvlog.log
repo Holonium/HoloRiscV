@@ -2,7 +2,6 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRis
 INFO: [VRFC 10-311] analyzing module decode
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module HoloRiscV
-INFO: [VRFC 10-2458] undeclared symbol spi_ack, assumed default net type wire [C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v:127]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/execute.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module execute
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/memory.v" into library xil_defaultlib
@@ -11,5 +10,9 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRis
 INFO: [VRFC 10-311] analyzing module writeback
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/fetch.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fetch
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/ram.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ram
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/uart.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module uart
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sim_1/new/HoloRiscV_TB.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module HoloRiscV_TB

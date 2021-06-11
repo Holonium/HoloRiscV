@@ -28,11 +28,8 @@ module memory (
     input [23:0] imm,
     input [2:0] f3,
     input [6:0] opcode,
-//    input [31:0] pc,
     output reg mosi = 1,
     output reg sck = 1,
-    output reg wp = 1,
-    output reg hold = 1,
     output reg cs = 1,
     output reg [31:0] dest,
     output reg done = 0
@@ -70,7 +67,7 @@ module memory (
 	           LOAD : begin
 	               case (cycle)
 	                   0 : begin
-	                       addr <= src1[23:0] + {{12{imm[11]}},imm[11:0]};
+	                       addr <= src1[23:0] + $signed({{12{imm[11]}},imm[11:0]});
 	                       cycle <= 1;
 	                   end
 	                   1 : begin
@@ -91,10 +88,10 @@ module memory (
 	                   end
 	                   4 : begin
 	                       sck <= 1;
-	                       cycle <= 3;
 	                       if (shift < 32) begin
 	                           if (shift > 0) begin
 	                               spi_buff_out <= spi_buff_out << 1;
+	                               cycle <= 3;
 	                           end
 	                       end
 	                       else begin
@@ -125,6 +122,7 @@ module memory (
 	                                       if (shift < 8) begin
 	                                           if (shift > 0) begin
 	                                               spi_buff_in <= spi_buff_in << 1;
+	                                               scycle <= 1;
                 	                           end
 	                                       end
 	                                       else begin
@@ -133,12 +131,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 6;
 	                                       spi_buff_in <= {{24{spi_buff_in[7]}},spi_buff_in[7:0]};
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           LH : begin
@@ -155,12 +154,12 @@ module memory (
 	                                       scycle <= 2;
 	                                   end
                 	                   2 : begin
-	                                       scycle <= 1;
                 	                       sck <= 0;
 	                                       if (shift < 16) begin
 	                                           if (shift > 0) begin
 	                                               spi_buff_in <= spi_buff_in << 1;
                 	                           end
+                	                           scycle <= 1;
 	                                       end
 	                                       else begin
 	                                           scycle <= 3;
@@ -168,12 +167,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 6;
 	                                       spi_buff_in <= {{16{spi_buff_in[15]}},spi_buff_in[15:0]};
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           LW : begin
@@ -190,12 +190,12 @@ module memory (
 	                                       scycle <= 2;
 	                                   end
                 	                   2 : begin
-	                                       scycle <= 1;
                 	                       sck <= 0;
 	                                       if (shift < 32) begin
 	                                           if (shift > 0) begin
 	                                               spi_buff_in <= spi_buff_in << 1;
                 	                           end
+                	                           scycle <= 1;
 	                                       end
 	                                       else begin
 	                                           scycle <= 3;
@@ -203,11 +203,12 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 6;
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           LBU : begin
@@ -224,12 +225,12 @@ module memory (
 	                                       scycle <= 2;
 	                                   end
                 	                   2 : begin
-	                                       scycle <= 1;
                 	                       sck <= 0;
 	                                       if (shift < 8) begin
 	                                           if (shift > 0) begin
 	                                               spi_buff_in <= spi_buff_in << 1;
                 	                           end
+                	                           scycle <= 1;
 	                                       end
 	                                       else begin
 	                                           scycle <= 3;
@@ -237,12 +238,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 6;
 	                                       spi_buff_in <= {{24{1'b0}},spi_buff_in[7:0]};
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           LHU : begin
@@ -259,12 +261,12 @@ module memory (
 	                                       scycle <= 2;
 	                                   end
                 	                   2 : begin
-	                                       scycle <= 1;
                 	                       sck <= 0;
 	                                       if (shift < 8) begin
 	                                           if (shift > 0) begin
 	                                               spi_buff_in <= spi_buff_in << 1;
                 	                           end
+                	                           scycle <= 1;
 	                                       end
 	                                       else begin
 	                                           scycle <= 3;
@@ -272,12 +274,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 6;
 	                                       spi_buff_in <= {{16{1'b0}},spi_buff_in[15:0]};
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           default : begin
@@ -329,7 +332,7 @@ module memory (
 	                       mosi <= 1;
 	                   end
 	                   4 : begin
-	                       addr <= src1[23:0] + {{12{imm[11]}},imm[11:0]};
+	                       addr <= src1[23:0] + $signed({{12{imm[11]}},imm[11:0]});
 	                       cycle <= 5;
 	                   end
 	                   5 : begin
@@ -392,12 +395,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 10;
 	                                       mosi <= 1;
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           SH : begin
@@ -427,12 +431,13 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 10;
 	                                       mosi <= 1;
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
 	                           SW : begin
@@ -462,20 +467,22 @@ module memory (
 	                                       end
 	                                       shift <= shift + 1;
 	                                   end
-	                                   default : begin
+	                                   3 : begin
 	                                       cs <= 1;
 	                                       scycle <= 0;
 	                                       cycle <= 10;
 	                                       mosi <= 1;
 	                                   end
+	                                   default : ;
 	                               endcase
 	                           end
-	                           default : begin
+	                           10 : begin
 	                               cycle <= 0;
 	                               scycle <= 0;
 	                               cs <= 1;
 	                               done <= 1;
 	                           end
+	                           default : ;
 	                       endcase
 	                   end
 	                   default : begin

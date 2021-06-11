@@ -23,18 +23,13 @@ module execute (
     input clk,
     input active,
     input [6:0] opcode,
-//    input [2:0] type,
-//    input [4:0] rd,
     input [2:0] f3,
-//    input [4:0] rs1,
-//    input [4:0] rs2,
-//    input [6:0] f7,
     input [31:0] extended,
     input [31:0] src1,
     input [31:0] src2,
     input [31:0] pc_in,
     input [31:0] imm,
-    input cmd30,
+    input [6:0] f7,
     output reg [31:0] dest,
     output reg [31:0] pc_out,
     output reg done = 0
@@ -108,18 +103,18 @@ module execute (
             case (cycle)
                 0 : begin
                     case (opcode)
-                        LUI : begin
+                        LUI : begin // Functional
                             dest <= {imm[31:12],{12{1'b0}}};
                             cycle <= 1;
                         end
-                        AUIPC : begin
+                        AUIPC : begin // Functional
                             dest <= pc_in + {imm[31:12],{12{1'b0}}};
                             cycle <= 1;
                         end
-                        JAL : begin
+                        JAL : begin // Functional?
                             case (scycle)
                                 0 : begin
-                                    pc_temp <= pc_in + {{12{imm[20]}},imm[20:1]};
+                                    pc_temp <= pc_in + $signed({{12{imm[20]}},imm[20:1]});
                                     scycle <= 1;
                                 end
                                 1 : begin
@@ -130,10 +125,10 @@ module execute (
                                 default : ;
                             endcase
                         end
-                        JALR : begin
+                        JALR : begin // Functional?
                             case (scycle)
                                 0 : begin
-                                    pc_temp <= src1 + {{20{imm[11]}},imm[11:0]};
+                                    pc_temp <= src1 + $signed({{20{imm[11]}},imm[11:0]});
                                     scycle <= 1;
                                 end
                                 1 : begin
@@ -152,39 +147,39 @@ module execute (
                             case (f3)
                                 BEQ : begin
                                     if (src1 == src2) begin
-                                        pc_temp <= pc_in + {{20{imm[12]}},imm[12:1]};
+                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 BNE : begin
                                     if (src1 != src2) begin
-                                        pc_temp <= pc_in + {{20{imm[12]}},imm[12:1]};
+                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 BLT : begin
                                     if ($signed(src1) < $signed(src2)) begin
-                                        pc_temp <= pc_in + {{20{imm[12]}},imm[12:1]};
+                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 BGE : begin
                                     if ($signed(src1) >= $signed(src2)) begin
-                                        pc_temp <= pc_in + {{20{imm[12]}},imm[12:1]};
+                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 BLTU : begin
                                     if (src1 < src2) begin
-                                        pc_temp <= pc_in + {{20{imm[12]}},imm[12:1]};
+                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 BGEU : begin
                                     if (src1 >= src2) begin
-                                        pc_out <= pc_temp + {{20{imm[12]}},imm[12:1]};
+                                        pc_out <= pc_temp + $signed({{20{imm[12]}},imm[12:1]});
                                     end
                                 end
                                 default : ;
                             endcase
                             cycle <= 1;
                         end
-                        ALUI : begin
+                        ALUI : begin // Functional
                             case (f3)
                                 ADDI : begin
                                     dest <= src1 + extended;
@@ -202,6 +197,7 @@ module execute (
                                 end
                                 XORI : begin
                                     dest <= src1 ^ extended;
+                                    cycle <= 1;
                                 end
                                 ORI : begin
                                     dest <= src1 | extended;
@@ -216,20 +212,22 @@ module execute (
                                     cycle <= 1;
                                 end
                                 SRI : begin
-                                    case (cmd30)
-                                        0 : dest <= src1 >> imm[4:0];
-                                        1 : dest <= $signed(src1) >>> imm[4:0];
+                                    case (f7)
+                                        7'b0000000 : dest <= src1 >> imm[4:0];
+                                        7'b0100000 : dest <= $signed(src1) >>> imm[4:0];
+                                        default : cycle <= 1;
                                     endcase
                                     cycle <= 1;
                                 end
                             endcase
                         end
-                        ALU : begin
+                        ALU : begin // Functional
                             case (f3)
                                 ADD : begin
-                                    case (cmd30)
-                                        0 : dest <= src1 + src2;
-                                        1 : dest <= src1 - src2;
+                                    case (f7)
+                                        7'b0000000 : dest <= src1 + src2;
+                                        7'b0100000 : dest <= src1 - src2;
+                                        default : cycle <= 1;
                                     endcase
                                     cycle <= 1;
                                 end
@@ -252,9 +250,10 @@ module execute (
                                     cycle <= 1;
                                 end
                                 SR : begin
-                                    case (cmd30)
-                                        0 : dest <= src1 >> src2[4:0];
-                                        1 : dest <= $signed(src1) >>> src2[4:0];
+                                    case (f7)
+                                        7'b0000000 : dest <= src1 >> src2[4:0];
+                                        7'b0100000 : dest <= $signed(src1) >>> src2[4:0];
+                                        default : cycle <= 1;
                                     endcase
                                     cycle <= 1;
                                 end

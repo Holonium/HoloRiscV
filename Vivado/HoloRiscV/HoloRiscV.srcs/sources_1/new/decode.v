@@ -24,7 +24,7 @@ module decode (
     input [31:0] cmd,
     input active,
     output reg [6:0] opcode,
-    output reg [2:0] type,
+    output reg [2:0] format,
     output reg [4:0] rd,
     output reg [2:0] f3,
     output reg [4:0] rs1,
@@ -56,34 +56,34 @@ module decode (
     
 //    reg [31:0] imm = 0;
     reg [1:0] cycle = 0;
-    
+        
     always @(negedge clk) begin
         if (active) begin
             case (cycle)
                 0 : begin
                     case (cmd[6:0])
-                        LUI : type <= U;
-                        AUIPC : type <= U;
-						JAL : type <= J;
-						JALR : type <= I;
-						BRANCH : type <= B;
-						LOAD : type <= I;
-						STORE : type <= S;
+                        LUI : format <= U;
+                        AUIPC : format <= U;
+						JAL : format <= J;
+						JALR : format <= I;
+						BRANCH : format <= B;
+						LOAD : format <= I;
+						STORE : format <= S;
 						ALUI : begin
 							case (cmd[14:12])
-								3'b001 : type <= R;
-								3'b101 : type <= R;
-								default : type <= I;
+								3'b001 : format <= R;
+								3'b101 : format <= R;
+								default : format <= I;
 							endcase
 						end
-						ALU : type <= R;
+						ALU : format <= R;
 						default : ;
 					endcase
 					opcode <= cmd[6:0];
 					cycle <= 1;
                 end
                 1 : begin
-                    case (type)
+                    case (format)
 						R : begin //R
 							f7 <= cmd[31:25];
 							rs2 <= cmd[24:20];

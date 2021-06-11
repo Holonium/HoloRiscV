@@ -12,17 +12,25 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="3000001fs"></ZoomEndTime>
-      <Cursor1Time time="1211fs"></Cursor1Time>
+      <ZoomEndTime time="2002000001fs"></ZoomEndTime>
+      <Cursor1Time time="1573321900fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="238"></NameColumnWidth>
+      <NameColumnWidth column_width="226"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="28" />
+   <WVObjectSize size="38" />
+   <wvobject fp_name="/HoloRiscV_TB/tb/uart_rxd_out" type="logic">
+      <obj_property name="ElementShortName">uart_rxd_out</obj_property>
+      <obj_property name="ObjectShortName">uart_rxd_out</obj_property>
+   </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/ja_mosi" type="logic">
       <obj_property name="ElementShortName">ja_mosi</obj_property>
       <obj_property name="ObjectShortName">ja_mosi</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/tx" type="logic">
+      <obj_property name="ElementShortName">tx</obj_property>
+      <obj_property name="ObjectShortName">tx</obj_property>
    </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/ja_cs" type="logic">
       <obj_property name="ElementShortName">ja_cs</obj_property>
@@ -36,9 +44,35 @@
       <obj_property name="ElementShortName">ja_sck</obj_property>
       <obj_property name="ObjectShortName">ja_sck</obj_property>
    </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/next" type="logic">
+      <obj_property name="ElementShortName">next</obj_property>
+      <obj_property name="ObjectShortName">next</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/memory_active" type="logic">
+      <obj_property name="ElementShortName">memory_active</obj_property>
+      <obj_property name="ObjectShortName">memory_active</obj_property>
+   </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/ja_rst" type="logic">
       <obj_property name="ElementShortName">ja_rst</obj_property>
       <obj_property name="ObjectShortName">ja_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/send" type="array">
+      <obj_property name="ElementShortName">send[43:0]</obj_property>
+      <obj_property name="ObjectShortName">send[43:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/active" type="logic">
+      <obj_property name="ElementShortName">active</obj_property>
+      <obj_property name="ObjectShortName">active</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/bit" type="array">
+      <obj_property name="ElementShortName">bit[6:0]</obj_property>
+      <obj_property name="ObjectShortName">bit[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/addr" type="array">
+      <obj_property name="ElementShortName">addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/ja_wp" type="logic">
       <obj_property name="ElementShortName">ja_wp</obj_property>
@@ -80,6 +114,14 @@
       <obj_property name="ElementShortName">fetch_active</obj_property>
       <obj_property name="ObjectShortName">fetch_active</obj_property>
    </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/send" type="array">
+      <obj_property name="ElementShortName">send[43:0]</obj_property>
+      <obj_property name="ObjectShortName">send[43:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/dump/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/tb/reg_file" type="array">
       <obj_property name="ElementShortName">reg_file[0:31][31:0]</obj_property>
       <obj_property name="ObjectShortName">reg_file[0:31][31:0]</obj_property>
@@ -91,10 +133,6 @@
    <wvobject fp_name="/HoloRiscV_TB/tb/opcode" type="array">
       <obj_property name="ElementShortName">opcode[6:0]</obj_property>
       <obj_property name="ObjectShortName">opcode[6:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/HoloRiscV_TB/tb/type" type="array">
-      <obj_property name="ElementShortName">type[2:0]</obj_property>
-      <obj_property name="ObjectShortName">type[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/tb/rd" type="array">
       <obj_property name="ElementShortName">rd[4:0]</obj_property>
@@ -122,6 +160,7 @@
    <wvobject fp_name="/HoloRiscV_TB/tb/extended" type="array">
       <obj_property name="ElementShortName">extended[31:0]</obj_property>
       <obj_property name="ObjectShortName">extended[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/tb/imm" type="array">
       <obj_property name="ElementShortName">imm[31:0]</obj_property>
@@ -134,5 +173,10 @@
    <wvobject fp_name="/HoloRiscV_TB/tb/pc_temp" type="array">
       <obj_property name="ElementShortName">pc_temp[31:0]</obj_property>
       <obj_property name="ObjectShortName">pc_temp[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/f3" type="array">
+      <obj_property name="ElementShortName">f3[2:0]</obj_property>
+      <obj_property name="ObjectShortName">f3[2:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
 </wave_config>

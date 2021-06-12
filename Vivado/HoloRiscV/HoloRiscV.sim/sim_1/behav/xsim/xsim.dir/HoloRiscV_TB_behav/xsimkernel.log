@@ -1,4 +1,7 @@
-Running: xsim.dir/HoloRiscV_TB_behav/xsimk.exe -simmode gui -wdb HoloRiscV_TB_behav.wdb -simrunnum 0 -socket 49699
+Running: xsim.dir/HoloRiscV_TB_behav/xsimk.exe -simmode gui -wdb HoloRiscV_TB_behav.wdb -simrunnum 0 -socket 54621
 Design successfully loaded
-Design Loading Memory Usage: 6336 KB (Peak: 6336 KB)
-Design Loading CPU Usage: 15 ms
+Design Loading Memory Usage: 6460 KB (Peak: 6460 KB)
+Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 16168 KB (Peak: 16168 KB)
+Simulation CPU Usage: 11250 ms

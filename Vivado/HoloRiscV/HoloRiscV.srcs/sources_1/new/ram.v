@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+//`default_nettype none
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -25,14 +26,23 @@ module ram(
     input we,
     input [14:0] addr,
     input [31:0] din,
-    output [31:0] dout
+    output reg [31:0] dout
     );
     
-    /*reg [31:0] mem [1023:0];
+    reg [31:0] mem [32767:0];
     
     initial begin
         $readmemh("ext.mem",mem);
-    end*/
+    end
+    
+    always @(posedge clk) begin
+        if (we) mem[addr] <= din;
+        dout <= mem[addr];
+    end
+    
+    /*wire [15:0] mem_addr;
+    
+    assign mem_addr = {1'b1,addr};
     
     RAMB36E1 #(
         .RDADDR_COLLISION_HWCONFIG("DELAYED_WRITE"),
@@ -217,7 +227,7 @@ module ram(
         .DOADO(dout),
         .CASCADEINA(1'b1),
         .CASCADEINB(1'b0),
-        .ADDRARDADDR({1'b1,addr[14:0]}),
+        .ADDRARDADDR(mem_addr),
         .CLKARDCLK(clk),
         .ENARDEN(1'b1),
         .REGCEAREGCE(1'b0),
@@ -235,5 +245,5 @@ module ram(
         .WEBWE(8'b00000000),
         .DIBDI(32'hffffffff),
         .DIPBDIP(4'hf)
-    );
+    );*/
 endmodule

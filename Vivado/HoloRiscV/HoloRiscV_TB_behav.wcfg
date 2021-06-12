@@ -11,15 +11,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="2885833001fs"></ZoomEndTime>
-      <Cursor1Time time="2885833000fs"></Cursor1Time>
+      <ZoomStartTime time="1466666fs"></ZoomStartTime>
+      <ZoomEndTime time="16506667fs"></ZoomEndTime>
+      <Cursor1Time time="14000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="218"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="15" />
+   <wave_markers>
+      <marker time="922790000" label="" />
+   </wave_markers>
    <wvobject fp_name="/HoloRiscV_TB/tb/dump/tx" type="logic">
       <obj_property name="ElementShortName">tx</obj_property>
       <obj_property name="ObjectShortName">tx</obj_property>
@@ -47,6 +50,18 @@
    <wvobject fp_name="/HoloRiscV_TB/tb/dump/send" type="array">
       <obj_property name="ElementShortName">send[51:0]</obj_property>
       <obj_property name="ObjectShortName">send[51:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/memory/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/memory/addr" type="array">
+      <obj_property name="ElementShortName">addr[14:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/HoloRiscV_TB/tb/memory/mem_addr" type="array">
+      <obj_property name="ElementShortName">mem_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_addr[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/HoloRiscV_TB/tb/dump/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[14:0]</obj_property>

@@ -267,6 +267,7 @@ module HoloRiscV(
     //assign uart_rxd_out = uart_active ? 1'b1 : uart_tx;
         
     always @(posedge core_clk) begin
+        if (locked) begin
         /*if (fetch_active && fetch_done) begin
             fetch_active <= 0;
             decode_active <= 1;
@@ -520,5 +521,6 @@ module HoloRiscV(
         if (!rst) begin
             init <= 0;
         end
+    end
     end
 endmodule

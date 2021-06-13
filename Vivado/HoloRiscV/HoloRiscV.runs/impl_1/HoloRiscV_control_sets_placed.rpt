@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Fri Jun 11 15:20:49 2021
+| Date         : Sat Jun 12 19:07:12 2021
 | Host         : DarkstarXII running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file HoloRiscV_control_sets_placed.rpt
 | Design       : HoloRiscV
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    62 |
-|    Minimum number of control sets                        |    62 |
+| Total control sets                                       |    61 |
+|    Minimum number of control sets                        |    61 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    58 |
+| Unused register locations in slices containing registers |    73 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    62 |
+| Total control sets |    61 |
 | >= 0 to < 4        |     1 |
 | >= 4 to < 6        |     3 |
-| >= 6 to < 8        |     5 |
-| >= 8 to < 10       |     4 |
-| >= 10 to < 12      |     2 |
+| >= 6 to < 8        |     4 |
+| >= 8 to < 10       |     5 |
+| >= 10 to < 12      |     4 |
 | >= 12 to < 14      |     0 |
-| >= 14 to < 16      |     3 |
-| >= 16              |    44 |
+| >= 14 to < 16      |     2 |
+| >= 16              |    42 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,83 +58,82 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              39 |           21 |
+| No           | No                    | No                     |              23 |           12 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |             462 |          160 |
+| Yes          | No                    | No                     |             323 |          124 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |            1049 |          460 |
+| Yes          | Yes                   | No                     |            1101 |          536 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+--------------+----------------------------------+-----------------------+------------------+----------------+--------------+
-| Clock Signal |           Enable Signal          |    Set/Reset Signal   | Slice Load Count | Bel Load Count | Bels / Slice |
-+--------------+----------------------------------+-----------------------+------------------+----------------+--------------+
-|  ja_sck_OBUF | dump/tx_i_1_n_0                  |                       |                1 |              1 |         1.00 |
-|  ja_sck_OBUF | dump/send                        | dump/send[39]_i_1_n_0 |                2 |              4 |         2.00 |
-| ~core_clk    | core_dec/rd[4]_i_1_n_0           |                       |                1 |              5 |         5.00 |
-| ~core_clk    | core_dec/rs2[4]_i_1_n_0          |                       |                1 |              5 |         5.00 |
-|  ja_sck_OBUF |                                  |                       |                3 |              6 |         2.00 |
-|  ja_sck_OBUF | dump/pause[5]_i_2_n_0            | dump/bit              |                2 |              6 |         3.00 |
-|  ja_sck_OBUF | dump/bit                         |                       |                2 |              6 |         3.00 |
-| ~core_clk    | core_dec/opcode[6]_i_1_n_0       |                       |                2 |              7 |         3.50 |
-| ~core_clk    | core_dec/f7[6]_i_1_n_0           |                       |                1 |              7 |         7.00 |
-|  core_clk    | core_dec/cycle_reg[0]_0          | core_dec/cycle_reg[0] |                5 |              8 |         1.60 |
-| ~core_clk    |                                  |                       |                3 |              8 |         2.67 |
-| ~core_clk    | core_dec/f3[2]_i_1_n_0           |                       |                1 |              8 |         8.00 |
-| ~core_clk    | core_dec/imm[20]_i_1_n_0         |                       |                2 |              9 |         4.50 |
-| ~core_clk    | core_dec/imm[31]_i_1_n_0         |                       |                5 |             11 |         2.20 |
-| ~core_clk    | core_dec/imm[11]_i_1_n_0         |                       |                2 |             11 |         5.50 |
-|  ja_sck_OBUF | dump/addr                        |                       |                4 |             15 |         3.75 |
-|  ja_sck_OBUF | dump/addr_out[14]_i_1_n_0        |                       |                5 |             15 |         3.00 |
-|  core_clk    | core_ex/E[0]                     | addr[14]_i_1_n_0      |                4 |             15 |         3.75 |
-| ~core_clk    | core_dec/extended[20]_i_1_n_0    |                       |                6 |             21 |         3.50 |
-|  core_clk    | core_dec/cycle_reg[1]_0          | core_dec/cycle_reg[1] |               11 |             24 |         2.18 |
-|  core_clk    | core_dec/cycle_reg[0]_0          |                       |               11 |             24 |         2.18 |
-|  core_clk    |                                  |                       |               15 |             25 |         1.67 |
-|  core_clk    | core_dec/execute_active_reg      |                       |               12 |             31 |         2.58 |
-|  core_clk    | core_dec/rd_reg[0]_0[0]          | fetch_active36_out    |               17 |             32 |         1.88 |
-|  core_clk    | core_dec/rd_reg[0]_1[0]          | fetch_active36_out    |               18 |             32 |         1.78 |
-|  core_clk    | core_dec/rd_reg[0]_4[0]          | fetch_active36_out    |               16 |             32 |         2.00 |
-|  core_clk    | core_dec/rd_reg[0]_5[0]          | fetch_active36_out    |               22 |             32 |         1.45 |
-|  core_clk    | core_dec/rd_reg[4]_2[0]          | fetch_active36_out    |               13 |             32 |         2.46 |
-|  core_clk    | core_dec/rd_reg[2]_0[0]          | fetch_active36_out    |               18 |             32 |         1.78 |
-|  core_clk    | core_dec/rd_reg[1]_6[0]          | fetch_active36_out    |                7 |             32 |         4.57 |
-|  core_clk    | core_dec/rd_reg[4]_4[0]          | fetch_active36_out    |                8 |             32 |         4.00 |
-|  core_clk    | core_dec/rd_reg[1]_8[0]          | fetch_active36_out    |               10 |             32 |         3.20 |
-|  core_clk    | core_dec/rd_reg[2]_3[0]          | fetch_active36_out    |               19 |             32 |         1.68 |
-|  core_clk    | core_dec/rd_reg[1]_3[0]          | fetch_active36_out    |               20 |             32 |         1.60 |
-|  core_clk    | core_dec/rd_reg[2]_4[0]          | fetch_active36_out    |               16 |             32 |         2.00 |
-|  core_clk    | core_dec/rd_reg[2]_2[0]          | fetch_active36_out    |               14 |             32 |         2.29 |
-|  core_clk    | core_dec/rd_reg[2]_5[0]          | fetch_active36_out    |               18 |             32 |         1.78 |
-|  core_clk    | core_dec/rd_reg[1]_7[0]          | fetch_active36_out    |               10 |             32 |         3.20 |
-|  core_clk    | core_dec/rd_reg[2]_6[0]          | fetch_active36_out    |               25 |             32 |         1.28 |
-|  core_clk    | core_dec/rd_reg[4]_6[0]          | fetch_active36_out    |               15 |             32 |         2.13 |
-|  core_clk    | core_dec/rd_reg[1]_5[0]          | fetch_active36_out    |                9 |             32 |         3.56 |
-|  core_clk    | core_dec/rd_reg[4]_5[0]          | fetch_active36_out    |               15 |             32 |         2.13 |
-|  core_clk    | core_dec/rd_reg[2]_1[0]          | fetch_active36_out    |               10 |             32 |         3.20 |
-|  ja_sck_OBUF | dump/data_buffer                 |                       |               10 |             32 |         3.20 |
-|  core_clk    | core_dec/memory_active_reg_0     |                       |               15 |             32 |         2.13 |
-|  core_clk    | core_dec/rd_reg[4]_3[0]          | fetch_active36_out    |               16 |             32 |         2.00 |
-|  core_clk    | core_dec/E[0]                    |                       |               22 |             32 |         1.45 |
-|  core_clk    | core_dec/execute_active_reg_0[0] |                       |                8 |             32 |         4.00 |
-|  core_clk    | core_dec/rd_reg[0]_2[0]          | fetch_active36_out    |               11 |             32 |         2.91 |
-|  core_clk    | cmd                              |                       |               10 |             32 |         3.20 |
-|  core_clk    | core_dec/rd_reg[0]_3[0]          | fetch_active36_out    |               15 |             32 |         2.13 |
-|  core_clk    | core_dec/rd_reg[4]_0[0]          | fetch_active36_out    |                9 |             32 |         3.56 |
-|  core_clk    | core_dec/rd_reg[4]_1[0]          | fetch_active36_out    |               16 |             32 |         2.00 |
-|  core_clk    | core_dec/rd_reg[1]_4[0]          | fetch_active36_out    |               12 |             32 |         2.67 |
-|  core_clk    | core_dec/rd_reg[0]_6[0]          | fetch_active36_out    |               10 |             32 |         3.20 |
-|  core_clk    | core_dec/rd_reg[0]_7[0]          | fetch_active36_out    |               12 |             32 |         2.67 |
-|  core_clk    | core_dec/rd_reg[1]_0[0]          | fetch_active36_out    |               12 |             32 |         2.67 |
-|  core_clk    | core_dec/rd_reg[1]_1[0]          | fetch_active36_out    |               13 |             32 |         2.46 |
-|  core_clk    | core_dec/rd_reg[1]_2[0]          | fetch_active36_out    |               10 |             32 |         3.20 |
-|  core_clk    | pc[31]_i_1_n_0                   |                       |                9 |             32 |         3.56 |
-|  core_clk    | core_ex/execute_active_reg[0]    |                       |               19 |             47 |         2.47 |
-|  ja_sck_OBUF | dump/send                        |                       |               11 |             47 |         4.27 |
-+--------------+----------------------------------+-----------------------+------------------+----------------+--------------+
++--------------+---------------------------------------+----------------------------+------------------+----------------+--------------+
+| Clock Signal |             Enable Signal             |      Set/Reset Signal      | Slice Load Count | Bel Load Count | Bels / Slice |
++--------------+---------------------------------------+----------------------------+------------------+----------------+--------------+
+|  uart_clk    | core_dump/tx0_out                     |                            |                1 |              1 |         1.00 |
+|  uart_clk    | core_dump/FSM_onehot_cycle[3]_i_1_n_0 |                            |                1 |              4 |         4.00 |
+|  uart_clk    | core_dump/send[51]_i_1_n_0            | core_dump/send[39]_i_1_n_0 |                3 |              4 |         1.33 |
+|  core_clk    | core_dec/rd[4]_i_1_n_0                |                            |                2 |              5 |         2.50 |
+|  uart_clk    | core_dump/bbit[5]_i_1_n_0             |                            |                3 |              6 |         2.00 |
+|  core_clk    | core_dec/f7[6]_i_1_n_0                |                            |                3 |              7 |         2.33 |
+|  core_clk    | core_dec/opcode[6]_i_1_n_0            |                            |                2 |              7 |         3.50 |
+|  uart_clk    | core_dump/pause[6]_i_1_n_0            |                            |                3 |              7 |         2.33 |
+|  core_clk    | core_dec/f3_reg[2]_1                  | core_dec/f3_reg[2]_21      |                2 |              8 |         4.00 |
+|  core_clk    | core_dec/f3_reg[2]_0                  |                            |                3 |              8 |         2.67 |
+|  core_clk    | core_dec/f3_reg[2]_0                  | core_dec/f3_reg[2]_18      |                1 |              8 |         8.00 |
+|  core_clk    | core_dec/rs2[4]_i_1_n_0               |                            |                2 |              9 |         4.50 |
+|  core_clk    | core_dec/imm[20]_i_1_n_0              |                            |                3 |              9 |         3.00 |
+|  core_clk    | core_dec/f3[2]_i_1_n_0                |                            |                2 |             10 |         5.00 |
+|  core_clk    | addr[9]_i_2_n_0                       | core_dec/SR[0]             |                3 |             10 |         3.33 |
+|  core_clk    | core_dec/imm[11]_i_1_n_0              |                            |                4 |             11 |         2.75 |
+|  core_clk    | core_dec/imm[31]_i_1_n_0              |                            |                4 |             11 |         2.75 |
+|  uart_clk    | core_dump/addr[0]_i_1_n_0             |                            |                4 |             15 |         3.75 |
+|  uart_clk    | core_dump/send[51]_i_1_n_0            | core_dump/send[50]_i_1_n_0 |                2 |             15 |         7.50 |
+|  core_clk    | core_dec/f3_reg[2]_0                  | core_dec/f3_reg[2]_19      |                3 |             16 |         5.33 |
+|  core_clk    | core_dec/f3_reg[2]_1                  | core_dec/f3_reg[2]_20      |                3 |             16 |         5.33 |
+|  core_clk    | core_dec/extended[20]_i_1_n_0         |                            |               10 |             21 |         2.10 |
+|  core_clk    |                                       |                            |               12 |             23 |         1.92 |
+|  core_clk    | core_ex/p_0_in[4]                     |                            |               12 |             31 |         2.58 |
+|  core_clk    | core_ex/dest[31]_i_1_n_0              |                            |               28 |             32 |         1.14 |
+|  core_clk    | core_ex/pc_out[31]_i_1_n_0            |                            |               14 |             32 |         2.29 |
+|  core_clk    | core_dec/rd_reg[3]_0[0]               | pc[31]_i_1_n_0             |               21 |             32 |         1.52 |
+|  core_clk    | core_dec/pc_reg[4][0]                 | pc[31]_i_1_n_0             |                9 |             32 |         3.56 |
+|  core_clk    | core_dec/rd_reg[3]_22[0]              | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_7[0]               | pc[31]_i_1_n_0             |               17 |             32 |         1.88 |
+|  core_clk    | core_dec/rd_reg[3]_1[0]               | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_9[0]               | pc[31]_i_1_n_0             |               11 |             32 |         2.91 |
+|  core_clk    | core_dec/rd_reg[3]_16[0]              | pc[31]_i_1_n_0             |               11 |             32 |         2.91 |
+|  core_clk    | core_dec/rd_reg[3]_14[0]              | pc[31]_i_1_n_0             |               17 |             32 |         1.88 |
+|  core_clk    | core_dec/rd_reg[3]_2[0]               | pc[31]_i_1_n_0             |               14 |             32 |         2.29 |
+|  core_clk    | core_dec/rd_reg[3]_3[0]               | pc[31]_i_1_n_0             |               17 |             32 |         1.88 |
+|  core_clk    | core_dec/rd_reg[3]_8[0]               | pc[31]_i_1_n_0             |               19 |             32 |         1.68 |
+|  core_clk    | core_dec/rd_reg[4]_2[0]               | pc[31]_i_1_n_0             |               12 |             32 |         2.67 |
+|  core_clk    | core_dec/rd_reg[4]_5[0]               | pc[31]_i_1_n_0             |               16 |             32 |         2.00 |
+|  core_clk    | core_dec/rd_reg[4]_7[0]               | pc[31]_i_1_n_0             |               12 |             32 |         2.67 |
+|  core_clk    | core_dec/rd_reg[3]_5[0]               | pc[31]_i_1_n_0             |               14 |             32 |         2.29 |
+|  core_clk    | core_dec/rd_reg[3]_18[0]              | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_10[0]              | pc[31]_i_1_n_0             |               13 |             32 |         2.46 |
+|  core_clk    | core_dec/rd_reg[3]_21[0]              | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_6[0]               | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_4[0]               | pc[31]_i_1_n_0             |               14 |             32 |         2.29 |
+|  core_clk    | core_dec/rd_reg[4]_6[0]               | pc[31]_i_1_n_0             |               16 |             32 |         2.00 |
+|  core_clk    | core_dec/rd_reg[4]_3[0]               | pc[31]_i_1_n_0             |               11 |             32 |         2.91 |
+|  core_clk    | core_dec/rd_reg[3]_20[0]              | pc[31]_i_1_n_0             |               13 |             32 |         2.46 |
+|  core_clk    | core_dec/rd_reg[3]_11[0]              | pc[31]_i_1_n_0             |               20 |             32 |         1.60 |
+|  core_clk    | core_dec/rd_reg[3]_17[0]              | pc[31]_i_1_n_0             |               14 |             32 |         2.29 |
+|  core_clk    | cmd                                   |                            |                8 |             32 |         4.00 |
+|  core_clk    | core_dec/rd_reg[3]_13[0]              | pc[31]_i_1_n_0             |               19 |             32 |         1.68 |
+|  core_clk    | core_dec/rd_reg[4]_0[0]               | pc[31]_i_1_n_0             |               22 |             32 |         1.45 |
+|  core_clk    | core_dec/rd_reg[3]_15[0]              | pc[31]_i_1_n_0             |               18 |             32 |         1.78 |
+|  core_clk    | core_dec/rd_reg[3]_19[0]              | pc[31]_i_1_n_0             |               23 |             32 |         1.39 |
+|  uart_clk    | core_dump/data_buffer[31]_i_1_n_0     |                            |                6 |             32 |         5.33 |
+|  core_clk    | core_dec/rd_reg[4]_1[0]               | pc[31]_i_1_n_0             |               14 |             32 |         2.29 |
+|  core_clk    | core_dec/rd_reg[4]_4[0]               | pc[31]_i_1_n_0             |               23 |             32 |         1.39 |
+|  core_clk    | core_dec/rd_reg[3]_12[0]              | pc[31]_i_1_n_0             |               19 |             32 |         1.68 |
+|  uart_clk    | core_dump/send[51]_i_1_n_0            |                            |                9 |             33 |         3.67 |
++--------------+---------------------------------------+----------------------------+------------------+----------------+--------------+
 
 

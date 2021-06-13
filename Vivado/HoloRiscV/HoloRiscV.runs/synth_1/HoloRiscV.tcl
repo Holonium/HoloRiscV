@@ -71,8 +71,9 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
-set_msg_config -id {Common 17-41} -limit 10000000
+set_msg_config -id {Physopt 32-662} -limit 9999
+set_msg_config -id {Physopt 32-668} -limit 9999
+set_msg_config -id {Physopt 32-702} -limit 9999
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -91,16 +92,13 @@ set_property ip_output_repo c:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRis
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_mem C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/ext.mem
+read_mem C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/ram.mem
 read_verilog -library xil_defaultlib {
   C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/decode.v
-  C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v
   C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/execute.v
-  C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/memory.v
-  C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/writeback.v
-  C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/fetch.v
   C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/ram.v
   C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/uart.v
+  C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/sources_1/new/HoloRiscV.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -118,12 +116,10 @@ read_xdc C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/c
 set_property used_in_implementation false [get_files C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/constrs_1/new/timing.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
-
-read_checkpoint -auto_incremental -incremental C:/Users/Holonium/Documents/HoloRiscV/Vivado/HoloRiscV/HoloRiscV.srcs/utils_1/imports/synth_1/HoloRiscV.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top HoloRiscV -part xc7a35ticsg324-1L -verbose
+synth_design -top HoloRiscV -part xc7a35ticsg324-1L
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
@@ -133,7 +129,7 @@ if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
 OPTRACE "write_checkpoint" START { CHECKPOINT }
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef -incremental_synth HoloRiscV.dcp
+write_checkpoint -force -noxdef HoloRiscV.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
 create_report "synth_1_synth_report_utilization_0" "report_utilization -file HoloRiscV_utilization_synth.rpt -pb HoloRiscV_utilization_synth.pb"

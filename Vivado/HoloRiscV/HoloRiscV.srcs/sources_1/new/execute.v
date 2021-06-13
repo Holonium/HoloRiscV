@@ -3,21 +3,23 @@
 // Company: 
 // Engineer: Holonium
 // 
-// Create Date: 06/05/2021 03:41:41 PM
+// Create Date: 06/12/2021 02:16:08 PM
 // Design Name: HoloRiscV
 // Module Name: execute
 // Project Name: HoloRiscV
 // Target Devices: xc7a35ticsg324-1L
 // Tool Versions: Vivado 2020.2
-// Description: 
+// Description: This is the execute stage of the HoloRiscV core.
 // 
 // Dependencies: 
 // 
 // Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Revision 0.0.1 - File Created
+// Revision 1.0.0 - Began rebuild
+// Additional Comments: This is not the final code, rather it is a checkpoint.
 // 
 //////////////////////////////////////////////////////////////////////////////////
+
 
 module execute (
     input clk,
@@ -34,8 +36,8 @@ module execute (
     output reg [31:0] pc_out,
     output reg done = 0
     );
-    
-    //Define opcodes
+
+    // Define Opcodes
 	parameter LUI = 7'b0110111;
 	parameter AUIPC = 7'b0010111;
 	parameter JAL = 7'b1101111;
@@ -46,7 +48,7 @@ module execute (
 	parameter ALUI = 7'b0010011;
 	parameter ALU = 7'b0110011;
     
-    //Define ALUI operations
+    // Define ALUI Operations
 	parameter ADDI = 3'b000;
 	parameter SLTI = 3'b010;
 	parameter SLTIU = 3'b011;
@@ -56,7 +58,7 @@ module execute (
 	parameter SLLI = 3'b001;
 	parameter SRI = 3'b101;
 	
-	//Define ALU operations
+	// Define ALU Operations
 	parameter ADD = 3'b000;
 	parameter SLL = 3'b001;
 	parameter SLT = 3'b010;
@@ -66,7 +68,7 @@ module execute (
 	parameter OR = 3'b110;
 	parameter AND = 3'b111;
 
-	//Define branches
+	// Define Branches
 	parameter BEQ = 3'b000;
 	parameter BNE = 3'b001;
 	parameter BLT = 3'b100;
@@ -74,44 +76,36 @@ module execute (
 	parameter BLTU = 3'b110;
 	parameter BGEU = 3'b111;
 
-	//Define load operations
+	// Define Load Operations
 	parameter LB = 3'b000;
 	parameter LH = 3'b001;
 	parameter LW = 3'b010;
 	parameter LBU = 3'b100;
 	parameter LHU = 3'b101;
 	
-	//Define store operations
+	// Define Store Operations
 	parameter SB = 3'b000;
 	parameter SH = 3'b001;
 	parameter SW = 3'b010;
-    
-	//Define instruction formats
-	parameter R = 3'b001;
-	parameter I = 3'b010;
-	parameter S = 3'b011;
-	parameter B = 3'b100;
-	parameter U = 3'b101;
-	parameter J = 3'b110;
-    
+
     reg cycle = 0;
     reg [1:0] scycle = 0;
-    reg [31:0] pc_temp;
-    
+    reg [31:0] pc_temp = 0;
+
     always @(posedge clk) begin
         if (active) begin
             case (cycle)
                 0 : begin
                     case (opcode)
-                        LUI : begin // Functional
+                        LUI : begin
                             dest <= {imm[31:12],{12{1'b0}}};
                             cycle <= 1;
                         end
-                        AUIPC : begin // Functional
+                        AUIPC : begin
                             dest <= pc_in + {imm[31:12],{12{1'b0}}};
                             cycle <= 1;
                         end
-                        JAL : begin // Functional?
+                        JAL : begin
                             case (scycle)
                                 0 : begin
                                     pc_temp <= pc_in + $signed({{12{imm[20]}},imm[20:1]});
@@ -122,10 +116,9 @@ module execute (
                                     cycle <= 1;
                                     scycle <= 0;
                                 end
-                                default : ;
                             endcase
                         end
-                        JALR : begin // Functional?
+                        JALR : begin
                             case (scycle)
                                 0 : begin
                                     pc_temp <= src1 + $signed({{20{imm[11]}},imm[11:0]});
@@ -137,138 +130,91 @@ module execute (
                                 end
                                 2 : begin
                                     pc_temp <= pc_temp + 4;
-                                    scycle <= 0;
                                     cycle <= 1;
+                                    scycle <= 0;
                                 end
-                                default : ;
                             endcase
                         end
                         BRANCH : begin
                             case (f3)
                                 BEQ : begin
-                                    if (src1 == src2) begin
-                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 BNE : begin
-                                    if (src1 != src2) begin
-                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 BLT : begin
-                                    if ($signed(src1) < $signed(src2)) begin
-                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 BGE : begin
-                                    if ($signed(src1) >= $signed(src2)) begin
-                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 BLTU : begin
-                                    if (src1 < src2) begin
-                                        pc_temp <= pc_in + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 BGEU : begin
-                                    if (src1 >= src2) begin
-                                        pc_out <= pc_temp + $signed({{20{imm[12]}},imm[12:1]});
-                                    end
+                                    
                                 end
                                 default : ;
                             endcase
                             cycle <= 1;
                         end
-                        ALUI : begin // Functional
+                        ALUI : begin
                             case (f3)
-                                ADDI : begin
-                                    dest <= src1 + extended;
-                                    cycle <= 1;
-                                end
+                                ADDI : dest <= src1 + extended;
                                 SLTI : begin
                                     if ($signed(src1) < $signed(extended)) dest <= 1;
                                     else dest <= 0;
-                                    cycle <= 1;
                                 end
                                 SLTIU : begin
                                     if (src1 < extended) dest <= 1;
                                     else dest <= 0;
-                                    cycle <= 1;
                                 end
-                                XORI : begin
-                                    dest <= src1 ^ extended;
-                                    cycle <= 1;
-                                end
-                                ORI : begin
-                                    dest <= src1 | extended;
-                                    cycle <= 1;
-                                end
-                                ANDI : begin
-                                    dest <= src1 & extended;
-                                    cycle <= 1;
-                                end
-                                SLLI : begin
-                                    dest <= src1 << imm[4:0];
-                                    cycle <= 1;
-                                end
+                                XORI : dest <= src1 ^ extended;
+                                ORI : dest <= src1 | extended;
+                                ANDI : dest <= src1 & extended;
+                                SLLI : dest <= src1 << imm[4:0];
                                 SRI : begin
                                     case (f7)
                                         7'b0000000 : dest <= src1 >> imm[4:0];
                                         7'b0100000 : dest <= $signed(src1) >>> imm[4:0];
-                                        default : cycle <= 1;
+                                        default : ;
                                     endcase
-                                    cycle <= 1;
                                 end
                             endcase
+                            cycle <= 1;
                         end
-                        ALU : begin // Functional
+                        ALU : begin
                             case (f3)
                                 ADD : begin
                                     case (f7)
                                         7'b0000000 : dest <= src1 + src2;
                                         7'b0100000 : dest <= src1 - src2;
-                                        default : cycle <= 1;
+                                        default : ;
                                     endcase
-                                    cycle <= 1;
                                 end
-                                SLL : begin
-                                    dest <= src1 << src2[4:0];
-                                    cycle <= 1;
-                                end
+                                SLL : dest <= src1 << src2[4:0];
                                 SLT : begin
                                     if ($signed(src1) < $signed(src2)) dest <= 1;
                                     else dest <= 0;
-                                    cycle <= 1;
                                 end
                                 SLTU : begin
                                     if (src1 < src2) dest <= 1;
                                     else dest <= 0;
-                                    cycle <= 1;
                                 end
-                                XOR : begin
-                                    dest <= src1 ^ src2;
-                                    cycle <= 1;
-                                end
+                                XOR : dest <= src1 ^ src2;
                                 SR : begin
                                     case (f7)
                                         7'b0000000 : dest <= src1 >> src2[4:0];
                                         7'b0100000 : dest <= $signed(src1) >>> src2[4:0];
-                                        default : cycle <= 1;
+                                        default : ;
                                     endcase
-                                    cycle <= 1;
                                 end
-                                OR : begin
-                                    dest <= src1 | src2;
-                                    cycle <= 1;
-                                end
-                                AND : begin
-                                    dest <= src1 & src2;
-                                    cycle <= 1;
-                                end
+                                OR : dest <= src1 | src2;
+                                AND : dest <= src1 & src2;
                             endcase
+                            cycle <= 1;
                         end
-                        LOAD : cycle <= 1;
-                        STORE : cycle <= 1;
                         default : cycle <= 1;
                     endcase
                 end
@@ -281,7 +227,6 @@ module execute (
                         BRANCH : pc_out <= pc_temp;
                         default : pc_out <= pc_in;
                     endcase
-                    done <= 1;
                 end
             endcase
         end

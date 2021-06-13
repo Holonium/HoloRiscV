@@ -1,92 +1,77 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Holonium
 // 
-// Create Date: 06/10/2021 02:13:11 PM
-// Design Name: 
+// Create Date: 06/12/2021 02:16:08 PM
+// Design Name: HoloRiscV
 // Module Name: uart
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
+// Project Name: HoloRiscV
+// Target Devices: xc7a35ticsg324-1L
+// Tool Versions: Vivado 2020.2
+// Description: This is a debugging module for the HoloRiscV core. Its purpose is
+// to dump the contents of the BRAM over UART to be read from a serial terminal.
+//  
 // Dependencies: 
 // 
 // Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Revision 0.0.1 - File Created
+// Revision 1.0.0 - Began rebuild
+// Additional Comments: This is not the final code, rather it is a checkpoint.
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
 `define DIV 87
 
-module uart(
+module uart (
     input clk,
     input [31:0] din,
     input active,
-    output reg next = 0,
     output reg tx = 1,
-    output reg [14:0] addr_out
+    output reg [14:0] addr = 0
     );
-    
-    reg [31:0] data_buffer;
-    
-    reg [51:0] send;
-    reg [2:0] cycle = 0;
-    reg [7:0] pause = 0;
-    reg [6:0] bit = 0;
-    reg shift = 0;
-    reg init = 0;
-    
-    reg align = 0;
-    
-    reg [14:0] addr = 0;
+
+    reg [31:0] data_buffer = 0;
+
+    reg [51:0] send = 0;
+    reg [1:0] cycle = 0;
+    reg [5:0] bbit = 0;
+    reg [6:0] pause = 0;
     
     always @(posedge clk) begin
-        case (cycle)
-            0 : begin
-                if (!init) begin
-                    addr_out <= addr;
-                    init <= 1;
-                end
-                else begin
+        if (active) begin
+            case (cycle)
+                0 : begin
                     data_buffer <= din;
                     cycle <= 1;
                 end
-            end
-            1 : begin
-                if (active && !next) begin
+                1 : begin
                     send <= {4'hf,data_buffer[31:24],1'b0,4'hf,data_buffer[23:16],1'b0,4'hf,data_buffer[15:8],1'b0,4'hf,data_buffer[7:0],1'b0};
                     cycle <= 2;
                 end
-            end
-            2 : begin
-                if (bit < 52) begin
-                    if (pause < 87) begin
-                        tx <= send[0];
-                        pause <= pause + 1;
+                2 : begin
+                    if (bbit < 52) begin
+                        if (pause < `DIV) begin
+                            tx <= send[0];
+                            pause <= pause + 1;
+                        end
+                        else if (pause == `DIV) begin
+                            send <= send >> 1;
+                            bbit <= bbit + 1;
+                            pause <= 0;
+                        end
                     end
-                    else begin
-                        send <= send >> 1;
-                        bit <= bit + 1;
+                    else if (bbit == 52) begin
+                        addr <= addr + 1;
+                        cycle <= 3;
+                        bbit <= 0;
                         pause <= 0;
                     end
                 end
-                else begin
-                    addr <= addr + 1;
-                    cycle <= 3;
-                    bit <= 0;
-                    pause <= 0;
+                3 : begin
+                    cycle <= 0;
                 end
-            end
-            3 : begin
-                addr_out <= addr;
-                cycle <= 4;
-            end
-            4 : begin
-                cycle <= 0;
-            end
-        endcase
+            endcase
+        end
     end
 endmodule

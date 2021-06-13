@@ -3,39 +3,40 @@
 // Company: 
 // Engineer: Holonium
 // 
-// Create Date: 06/05/2021 03:41:41 PM
+// Create Date: 06/12/2021 02:16:08 PM
 // Design Name: HoloRiscV
 // Module Name: decode
 // Project Name: HoloRiscV
 // Target Devices: xc7a35ticsg324-1L
 // Tool Versions: Vivado 2020.2
-// Description: 
+// Description: This is the decode stage of the HoloRiscV core.
 // 
 // Dependencies: 
 // 
 // Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Revision 0.0.1 - File Created
+// Revision 1.0.0 - Began rebuild
+// Additional Comments: This is not the final code, rather it is a checkpoint.
 // 
 //////////////////////////////////////////////////////////////////////////////////
+
 
 module decode (
     input clk,
     input [31:0] cmd,
     input active,
     output reg [6:0] opcode,
-    output reg [2:0] format,
     output reg [4:0] rd,
     output reg [2:0] f3,
     output reg [4:0] rs1,
     output reg [4:0] rs2,
     output reg [6:0] f7,
-    output reg [31:0] extended,
     output reg [31:0] imm,
+    output reg [31:0] extended,
     output reg done = 0
     );
-    
-    //Define opcodes
+
+    // Define Opcodes
 	parameter LUI = 7'b0110111;
 	parameter AUIPC = 7'b0010111;
 	parameter JAL = 7'b1101111;
@@ -46,18 +47,19 @@ module decode (
 	parameter ALUI = 7'b0010011;
 	parameter ALU = 7'b0110011;
 
-	//Define instruction formats
+	// Define Instruction Formats
 	parameter R = 3'b001;
 	parameter I = 3'b010;
 	parameter S = 3'b011;
 	parameter B = 3'b100;
 	parameter U = 3'b101;
 	parameter J = 3'b110;
-    
-//    reg [31:0] imm = 0;
+
+    // Define Control Registers
     reg [1:0] cycle = 0;
-        
-    always @(negedge clk) begin
+    reg [2:0] format = 0;
+
+    always @(posedge clk) begin
         if (active) begin
             case (cycle)
                 0 : begin
@@ -78,9 +80,9 @@ module decode (
 						end
 						ALU : format <= R;
 						default : ;
-					endcase
-					opcode <= cmd[6:0];
-					cycle <= 1;
+                    endcase
+                    opcode <= cmd[6:0];
+                    cycle <= 1;
                 end
                 1 : begin
                     case (format)
@@ -115,7 +117,7 @@ module decode (
 						U : begin //U
 							imm[31:12] <= cmd[31:12];
 							rd <= cmd[11:7];
-							extended <= {{20{cmd[31]}},imm[31:12]};
+							extended <= {{12{cmd[31]}},imm[31:12]};
 						end
 						J : begin //J
 							imm[20:1] <= {cmd[31],cmd[19:12],cmd[20],cmd[30:21]};
@@ -125,15 +127,13 @@ module decode (
 						default : ;
 					endcase
 					cycle <= 2;
-				end
-				2 : begin
-					cycle <= 0;
-					done <= 1;
-				end
-				default : ;
+                end
+                2 : begin
+                    cycle <= 0;
+                    done <= 1;
+                end
             endcase
         end
         else if (!active) done <= 0;
     end
-    
 endmodule

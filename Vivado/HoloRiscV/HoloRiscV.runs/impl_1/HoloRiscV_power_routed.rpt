@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Fri Jun 11 15:21:27 2021
+| Date             : Sat Jun 12 19:07:42 2021
 | Host             : DarkstarXII running 64-bit major release  (build 9200)
 | Command          : report_power -file HoloRiscV_power_routed.rpt -pb HoloRiscV_power_summary_routed.pb -rpx HoloRiscV_power_routed.rpx
 | Design           : HoloRiscV
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.178        |
+| Total On-Chip Power (W)  | 0.169        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.116        |
-| Device Static (W)        | 0.063        |
+| Dynamic (W)              | 0.107        |
+| Device Static (W)        | 0.062        |
 | Effective TJA (C/W)      | 4.8          |
-| Max Ambient (C)          | 99.1         |
-| Junction Temperature (C) | 25.9         |
+| Max Ambient (C)          | 99.2         |
+| Junction Temperature (C) | 25.8         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        6 |       --- |             --- |
-| Slice Logic    |    <0.001 |     4145 |       --- |             --- |
-|   LUT as Logic |    <0.001 |     1880 |     20800 |            9.04 |
-|   CARRY4       |    <0.001 |      100 |      8150 |            1.23 |
-|   F7/F8 Muxes  |    <0.001 |      378 |     32600 |            1.16 |
-|   Register     |    <0.001 |     1550 |     41600 |            3.73 |
-|   Others       |     0.000 |       13 |       --- |             --- |
-| Signals        |     0.001 |     3072 |       --- |             --- |
-| Block RAM      |     0.006 |       32 |        50 |           64.00 |
+| Slice Logic    |    <0.001 |     3682 |       --- |             --- |
+|   LUT as Logic |    <0.001 |     1637 |     20800 |            7.87 |
+|   CARRY4       |    <0.001 |       77 |      8150 |            0.94 |
+|   Register     |    <0.001 |     1447 |     41600 |            3.48 |
+|   F7/F8 Muxes  |    <0.001 |      256 |     32600 |            0.79 |
+|   Others       |     0.000 |       12 |       --- |             --- |
+| Signals        |    <0.001 |     2871 |       --- |             --- |
+| Block RAM      |    <0.001 |        1 |        50 |            2.00 |
 | MMCM           |     0.106 |        1 |         5 |           20.00 |
-| I/O            |     0.001 |        9 |       210 |            4.29 |
-| Static Power   |     0.063 |          |           |                 |
-| Total          |     0.178 |          |           |                 |
+| I/O            |    <0.001 |        3 |       210 |            1.43 |
+| Static Power   |     0.062 |          |           |                 |
+| Total          |     0.169 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       0.950 |     0.016 |       0.009 |      0.006 |       NA    | Unspecified | NA         |
+| Vccint    |       0.950 |     0.008 |       0.002 |      0.006 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.070 |       0.059 |      0.011 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -83,7 +83,7 @@ Table of Contents
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       0.950 |     0.001 |       0.001 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       0.950 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.018 |       0.000 |      0.018 |       NA    | Unspecified | NA         |
@@ -146,9 +146,8 @@ Table of Contents
 +------------+-----------+
 | Name       | Power (W) |
 +------------+-----------+
-| HoloRiscV  |     0.116 |
-|   core_dec |     0.002 |
-|   memory   |     0.007 |
+| HoloRiscV  |     0.107 |
+|   core_dec |     0.001 |
 +------------+-----------+
 
 

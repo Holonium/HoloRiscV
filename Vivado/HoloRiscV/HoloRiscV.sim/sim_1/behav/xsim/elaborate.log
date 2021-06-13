@@ -1,6 +1,6 @@
 Vivado Simulator 2020.2
 Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
-Running: C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 5304fe32ce0949feac6400e1d85d8589 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot HoloRiscV_TB_behav xil_defaultlib.HoloRiscV_TB xil_defaultlib.glbl -log elaborate.log 
+Running: C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 19cc7167e7b64bae9d811e879583e91f --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot HoloRiscV_behav xil_defaultlib.HoloRiscV xil_defaultlib.glbl -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
@@ -16,6 +16,5 @@ Compiling module xil_defaultlib.decode
 Compiling module xil_defaultlib.execute
 Compiling module xil_defaultlib.uart
 Compiling module xil_defaultlib.HoloRiscV
-Compiling module xil_defaultlib.HoloRiscV_TB
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot HoloRiscV_TB_behav
+Built simulation snapshot HoloRiscV_behav

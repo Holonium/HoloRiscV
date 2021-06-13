@@ -1,7 +1,0 @@
-# compile verilog/system verilog design source files
-verilog xil_defaultlib  \
-"HoloRiscV_TB_time_synth.v" \
-"../../../../../HoloRiscV.srcs/sim_1/new/HoloRiscV_TB.v" \
-
-# Do not sort compile order
-nosort
